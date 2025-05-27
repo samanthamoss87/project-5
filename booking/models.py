@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class Treatments(models.Model):
@@ -14,16 +13,8 @@ class Treatments(models.Model):
         return f"{self.title}"
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    mobile = models.CharField(max_length=15)
-
-    def __str__(self):
-        return self.user.username
-
 
 class Booking(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     treatment = models.ForeignKey(Treatments, on_delete=models.CASCADE)
     date = models.DateField()
     start_time = models.TimeField()
@@ -38,7 +29,7 @@ class Booking(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user.username} - {self.treatment.title} on {self.date} at {self.start_time} for {self.duration} minutes"
+        return f"{self.treatment.title} on {self.date} at {self.start_time} for {self.duration} minutes"
 
 
 
