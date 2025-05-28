@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d-4ssstud6o7krn@qiy)^p#@6s@a9xed-wb-3h8)_v5nbf3f!h'
@@ -45,7 +46,10 @@ ROOT_URLCONF = 'thai_massage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
