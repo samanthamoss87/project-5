@@ -1,9 +1,7 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.utils import timezone
 from django.core.exceptions import ValidationError
-import uuid
 import datetime
+from django.utils import timezone
 from .models import  Booking, Contact
 
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Treatments(models.Model):
@@ -21,6 +22,7 @@ class Booking(models.Model):
     end_time = models.TimeField()
     duration = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         from datetime import datetime, timedelta
@@ -29,7 +31,7 @@ class Booking(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.treatment.title} on {self.date} at {self.start_time} for {self.duration} minutes"
+        return f"{self.user } - {self.treatment.title} on {self.date} at {self.start_time} for {self.duration} minutes"
 
 
 

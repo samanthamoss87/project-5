@@ -21,7 +21,7 @@ def treatments(request):
     return render(request, 'treatments.html', {'treatments': treatment_list})
 
 
-
+@login_required
 def book_now(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
@@ -32,6 +32,8 @@ def book_now(request):
             booking.save()
             return redirect('booking_success')
 
+        else:
+            render(request, 'booking.html', {'form': form})
     else:
         form = BookingForm()
     
