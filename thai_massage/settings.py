@@ -16,7 +16,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'booking'
+    'django.contrib.sites',
+    'booking',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -28,6 +32,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -45,13 +50,29 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request',   # requires by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_LOGIN_METHODS = {'username', 'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'email2*', 'username*', 'password1*', 'password2*']
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'thai_massage.wsgi.application'
 
@@ -114,7 +135,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-samanthamoss87-project5-xhachv1p04u.ws-eu118.gitpod.io',]
+CSRF_TRUSTED_ORIGINS = ['https://8000-samanthamoss87-project5-xhachv1p04u.ws-eu120.gitpod.io',]
 
 
 SESSION_COOKIE_AGE = 7200
