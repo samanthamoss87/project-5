@@ -92,7 +92,7 @@ def edit_booking(request, item_id):
         form = BookingForm(request.POST, instance=booking)
         if form.is_valid():
             form.save()  # Save the updated booking details
-            return redirect('view_bag')  # After saving, return to the bag
+            return redirect('view_bag')
     else:
         form = BookingForm(instance=booking)
 
