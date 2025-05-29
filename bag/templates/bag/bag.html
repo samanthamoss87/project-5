@@ -24,7 +24,8 @@
                     <th scope="col">Date</th>
                     <th scope="col">Time</th>
                     <th scope="col">Duration</th>
-                    <th scope="col" class="text-end">Price</th>
+                    <th scope="col">Price</th>
+                    <th scope="col" class="text-end">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +36,11 @@
                     <td>{{ item.start_time }}</td>
                     <td>{{ item.duration }} mins</td>
                     <td class="text-end">${{ item.price|floatformat:2 }}</td>
+                    <td class="text-end">
+                        {% if item.id %}
+                        <a href="{% url 'remove_from_bag' item.id %}" class="btn btn-danger btn-sm" onclick="confirmRemove('{{ item.id }}')">Remove</a>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -65,4 +71,17 @@
 </div>
 
 
+{% endblock %}
+
+{% block postloadjs %}
+<script>
+    function confirmRemove(itemId) {
+        const userConfirmed = confirm("Are you sure you want to remove this item from your bag?");
+        
+        if (userConfirmed) {
+            // Redirect to the remove URL with the item ID to perform removal
+            window.location.href = "/bag/remove/" + itemId + "/";
+        }
+    }
+</script>
 {% endblock %}

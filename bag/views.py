@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+import uuid
 from booking.models import Treatments
 
 def view_bag(request):
@@ -22,6 +23,7 @@ def add_to_bag(request):
             price = treatment.two_hour
         
         bag_item = {
+            'id': str(uuid.uuid4()),
             'treatment_id': treatment.id,
             'treatment_title': treatment.title,
             'date': date,
@@ -52,3 +54,19 @@ def view_bag(request):
     }
 
     return render(request, 'bag/bag.html', context)
+
+
+def remove_from_bag(request, item_id):
+    # Get the current items in the bag from the session
+    bag_items = request.session.get('bag', [])
+    
+    # Check and remove the item with the matching item_id
+    updated_bag_items = [
+        item for item in bag_items if item.get('id') != item_id
+    ]
+    
+    # Update the session with the new list
+    request.session['bag'] = updated_bag_items
+    request.session.modified = True
+    
+    return redirect('view_bag')
