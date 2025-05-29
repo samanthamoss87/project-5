@@ -47,11 +47,11 @@ def add_to_bag(request):
 @login_required
 def view_bag(request):
     bag_items = request.session.get('bag', [])
-    total = sum(item['price'] for item in bag_items)
+    total_price = sum(item['price'] for item in bag_items)
 
     context = {
         'bag_items': bag_items,
-        'total': total
+        'total_price': total_price
     }
 
     return render(request, 'bag/bag.html', context)
