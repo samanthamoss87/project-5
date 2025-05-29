@@ -28,7 +28,7 @@
                 </div>
                 {% endif %}
 
-                <form method="post" action="{% url 'view_bag' %}" id="booking-form">
+                <form method="post" action="{% url 'add_to_bag' %}" id="booking-form">
                   {% csrf_token %}
                   <div class="mb-3">
                     <label class="form-label">Select Treatment:</label>
@@ -59,7 +59,4 @@
         </div>
     </div>
 </section>
-
-
-
 {% endblock %}

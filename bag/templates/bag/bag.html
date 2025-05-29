@@ -12,18 +12,56 @@
 </header>
 
 
-<div class="container mt-8">
-    <div class="col">
-        {% if bag_items %}
-        <div class="table-responsive"></div>
-        {% else %}
-        <div class="d-flex justify-content-center align-items-center flex-column p-5">
-            <h2 class="">Your Bag is Empty</h2>
-            <a href="{% url 'treatments' %}">Go Back to Treatments</a>
-        </div>
-        
-        {% endif %}
+<div class="container mt-5">
+    {% if bag_items %}
+
+
+    <div class="table">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Treatment</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col" class="text-end">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in bag_items %}
+                <tr>
+                    <td>{{ item.treatment_title }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.start_time }}</td>
+                    <td>{{ item.duration }} mins</td>
+                    <td class="text-end">${{ item.price|floatformat:2 }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4">Your cart is empty</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-end fw-bold">Total:</td>
+                    <td class="text-end fw-bold">${{ total|floatformat:2 }}</td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
+
+    <div class="mt-5 d-flex justify-content-center align-items-center mb-5 gap-3">
+        <a href="{% url 'treatments' %}" class="btn btn-primary">Add More Treatments</a>
+        <a href="#" class="btn btn-secondary">Go To Checkout</a>
+    </div>
+
+    {% else %}
+    <div class="d-flex justify-content-center align-items-center flex-column p-5">
+        <h2 class="">Your Bag is Empty</h2>
+        <a href="{% url 'treatments' %}">Go Back to Treatments</a>
+    </div>
+    {% endif %}
 </div>
 
 
