@@ -38,7 +38,8 @@
                     <td class="text-end">${{ item.price|floatformat:2 }}</td>
                     <td class="text-end">
                         {% if item.id %}
-                        <a href="{% url 'remove_from_bag' item.id %}" class="btn btn-danger btn-sm" onclick="confirmRemove('{{ item.id }}')">Remove</a>
+                        <a href="{% url 'remove_from_bag' item_id=item.id %}" class="btn btn-danger btn-sm" onclick="confirmRemove('{{ item.id }}')">Remove</a>
+                        <a href="{% url 'edit_booking' item.id %}" class="btn btn-warning btn-sm">Edit</a>
                         {% endif %}
                     </td>
                 </tr>

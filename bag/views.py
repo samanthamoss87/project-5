@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 import uuid
-from booking.models import Treatments
+from booking.models import Treatments, Booking
+from booking.forms import BookingForm
 
 def view_bag(request):
     return render(request, 'bag/bag.html')
@@ -70,3 +71,35 @@ def remove_from_bag(request, item_id):
     request.session.modified = True
     
     return redirect('view_bag')
+
+
+@login_required
+def edit_booking(request, item_id):
+    # Ensure item_id is a string, since uuid generates string-based IDs
+    item_id = str(item_id)
+
+    # Find the bag item based on the item_id in the session
+    bag_items = request.session.get('bag', [])
+    item_to_edit = next((item for item in bag_items if str(item['id']) == item_id), None)
+
+    if not item_to_edit:
+        return redirect('view_bag')  # If item not found, return to the bag
+
+    # Fetch the booking object related to the item
+    booking = get_object_or_404(Booking, id=item_to_edit['treatment_id'], user=request.user)
+    
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()  # Save the updated booking details
+            return redirect('view_bag')  # After saving, return to the bag
+    else:
+        form = BookingForm(instance=booking)
+
+    context = {
+        'form': form,
+        'item_id': item_id,
+        'item_to_edit': item_to_edit
+    }
+
+    return render(request, 'bag/edit_booking.html', context)

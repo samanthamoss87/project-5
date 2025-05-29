@@ -1,0 +1,62 @@
+<!-- edit_booking_in_bag.html -->
+{% extends 'base.html' %}
+
+{% block title %} Edit Booking - Thai Siam Massage {% endblock %}
+
+{% block content %}
+<header class="masthead masthead-banner">
+    <div class="container">
+        <div class="masthead-heading text-uppercase">Edit Booking</div>
+    </div>
+</header>
+
+<section class="page-section" id="booking">
+    <div class="container">
+        <div class="row flex justify-content-center align-items-center">
+            <div class="col-lg-6 col-sm-12">
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> Please correct the following:
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'edit_booking' item_id=item_id %}" id="booking-form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Select Treatment:</label>
+                        {{ form.treatment }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Select Duration:</label>
+                        {% for choice in form.duration %}
+                            <div class="form-check">
+                                {{ choice.tag }}
+                                <label class="form-check-label" for="{{ choice.id_for_label }}">
+                                    {{ choice.choice_label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_date" class="form-label">Date:</label>
+                        {{ form.date }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_start_time" class="form-label">Start Time:</label>
+                        {{ form.start_time }}
+                    </div>
+                    <button type="submit" class="btn btn-outline-success btn-lg w-100">Update Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
