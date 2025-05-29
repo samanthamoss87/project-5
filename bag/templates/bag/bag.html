@@ -5,14 +5,26 @@
 
 {% block content %}
 
-<header class="masthead">
+<header class="masthead masthead-banner">
     <div class="container">
-        <div class="masthead-heading text-uppercase">Thai Siam Massage</div>
-        <div class="masthead-subheading">Thai massage therapist in Germasogeia, Cyprus</div>
+        <div class="masthead-heading text-uppercase">Your Treatment Bag</div>
     </div>
 </header>
 
 
+<div class="container mt-8">
+    <div class="col">
+        {% if bag_items %}
+        <div class="table-responsive"></div>
+        {% else %}
+        <div class="d-flex justify-content-center align-items-center flex-column p-5">
+            <h2 class="">Your Bag is Empty</h2>
+            <a href="{% url 'treatments' %}">Go Back to Treatments</a>
+        </div>
+        
+        {% endif %}
+    </div>
+</div>
+
+
 {% endblock %}
-        
-        
