@@ -16,6 +16,10 @@ def home(request):
     return render(request, 'home.html')
 
 
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
 def treatments(request):
     treatment_list = Treatments.objects.all()
     return render(request, 'treatments.html', {'treatments': treatment_list})
@@ -54,7 +58,6 @@ def cancel_booking(request, booking_id):
     else:
         messages.error(request, 'You do not have permission to cancel this booking.')
     return redirect('dashboard')
-
 
 
 def contact(request):

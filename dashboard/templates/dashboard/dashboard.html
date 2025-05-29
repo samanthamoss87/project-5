@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Dashboard - {{user.username}} {% endblock %}
+
+{% block content %}
+
+<header class="masthead masthead-banner">
+  <div class="container">
+    <div class="masthead-heading text-uppercase">Welcome, {{user.username}}</div>
+  </div>
+</header>
+
+
+
+{% endblock %}

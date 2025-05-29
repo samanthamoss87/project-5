@@ -18,11 +18,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'booking',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'bag'
+    
+    'booking',
+    'bag',
+    'dashboard'
 ]
 
 MIDDLEWARE = [

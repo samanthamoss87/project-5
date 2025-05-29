@@ -4,10 +4,11 @@ from django.conf.urls import handler404
 
 
 urlpatterns = [
+    path('', include('booking.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', include('booking.urls')),
-    path('bag/', include('bag.urls'))
+    path('bag/', include('bag.urls')),
+    path('dashboard/', include('dashboard.urls')),
 ]
 
 
