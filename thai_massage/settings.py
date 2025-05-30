@@ -1,9 +1,12 @@
 from pathlib import Path
 from decouple import config
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-d-4ssstud6o7krn@qiy)^p#@6s@a9xed-wb-3h8)_v5nbf3f!h'
+SECRET_KEY = os.getenv('DJANG0_SECRET_KEY')
 
 DEBUG = True
 
@@ -21,10 +24,12 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
     
     'booking',
     'bag',
-    'dashboard'
+    'dashboard',
+    'checkout',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +89,11 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'thai_massage.wsgi.application'
+
+
+""" Stripe payment keys """
+STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
+STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
 
 """ For Production """
 # DATABASES = {
