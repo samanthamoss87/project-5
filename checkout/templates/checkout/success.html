@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="masthead masthead-banner">
+    <div class="container">
+        <div class="masthead-heading text-uppercase">Order Confirmation</div>
+    </div>
+</header>
+
+<div class="container my-5">
+    <div class="text-center">
+        <div class="mb-4">
+            <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+        </div>
+        <h2 class="mb-3">Payment Successful!</h2>
+        <p class="lead mb-4">Thank you for your order #{{ order.id }}</p>
+        <p>A confirmation email has been sent to <strong>{{ order.email }}</strong></p>
+        
+        <div class="card mx-auto mt-4" style="max-width: 500px;">
+            <div class="card-body">
+                <h5 class="card-title">Order Summary</h5>
+                <hr>
+                <p class="mb-1"><strong>Order Number:</strong> #{{ order.id }}</p>
+                <p class="mb-1"><strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}</p>
+                <p class="mb-1"><strong>Total:</strong> £{{ order.amount }}</p>
+                <hr>
+                <p class="mb-0">We'll send you shipping confirmation when your items are on their way!</p>
+            </div>
+        </div>
+        
+        <div class="mt-5">
+            <a href="{% url 'home' %}" class="btn btn-primary">
+                <i class="fas fa-home mr-2"></i> Return Home
+            </a>
+            <a href="{% url 'orders:order_history' %}" class="btn btn-outline-secondary ml-2">
+                <i class="fas fa-history mr-2"></i> View Order History
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

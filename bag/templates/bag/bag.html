@@ -60,7 +60,7 @@
 
     <div class="mt-5 d-flex justify-content-center align-items-center mb-5 gap-3">
         <a href="{% url 'book_now' %}" class="btn btn-primary">Add More Treatments</a>
-        <a href="#" class="btn btn-secondary">Go To Checkout</a>
+        <a href="{% url 'checkout:checkout' %}" class="btn btn-secondary">Go To Checkout</a>
     </div>
 
     {% else %}
