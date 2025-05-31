@@ -8,22 +8,31 @@
 <!-- Stripe Elements CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
+    /* Style the card element container */
     #card-element {
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    background: white;
-    min-height: 40px;
-}
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background: white;
+        min-height: 40px;
+    }
 
-.StripeElement--focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-}
+    /* Style when card element is focused */
+    .StripeElement--focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
 
-.StripeElement--invalid {
-    border-color: #dc3545;
-}
+    /* Style when card element is invalid */
+    .StripeElement--invalid {
+        border-color: #dc3545;
+    }
+
+    /* Custom padding for the card errors */
+    #card-errors {
+        color: #dc3545;
+        padding: 5px 0;
+    }
 </style>
 {% endblock %}
 
@@ -41,20 +50,23 @@
             <form method="POST" id="payment-form">
                 {% csrf_token %}
                 {{ form|crispy }}
-                
+
+                <!-- Stripe Card Element -->
                 <!-- Stripe Card Element -->
                 <div class="form-group">
                     <label for="card-element">Credit or debit card</label>
-                    <div id="card-element"></div>
+                    <div id="card-element" class="form-control"> <!-- Apply CSS classes here -->
+                        <!-- Stripe will inject the card input here -->
+                    </div>
                     <div id="card-errors" role="alert"></div>
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary btn-block mt-4">
                     Pay £{{ total_price|floatformat:2 }}
                 </button>
             </form>
         </div>
-        
+
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
@@ -74,17 +86,17 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script>
     // Wait for DOM to be fully loaded
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const stripe = Stripe('{{ stripe_public_key }}');
         const elements = stripe.elements();
-        
+
         // Check if card element exists before mounting
         const cardElement = document.getElementById('card-element');
         if (!cardElement) {
             console.error("Card element not found!");
             return;
         }
-        
+
         const card = elements.create('card', {
             style: {
                 base: {
@@ -93,11 +105,11 @@
                 }
             }
         });
-        
+
         card.mount('#card-element');
-        
+
         // Handle real-time validation errors
-        card.addEventListener('change', function(event) {
+        card.addEventListener('change', function (event) {
             const displayError = document.getElementById('card-errors');
             if (event.error) {
                 displayError.textContent = event.error.message;
@@ -105,31 +117,31 @@
                 displayError.textContent = '';
             }
         });
-        
+
         // Handle form submission
         const form = document.getElementById('payment-form');
-        form.addEventListener('submit', async function(event) {
+        form.addEventListener('submit', async function (event) {
             event.preventDefault();
-            
+
             // Disable submit button
             const submitButton = form.querySelector('button[type="submit"]');
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            
+
             // Validate form
             if (!form.reportValidity()) {
                 submitButton.disabled = false;
                 submitButton.innerHTML = 'Pay £{{ total_price|floatformat:2 }}';
                 return;
             }
-            
+
             try {
-                const {paymentMethod, error} = await stripe.createPaymentMethod({
+                const { paymentMethod, error } = await stripe.createPaymentMethod({
                     type: 'card',
                     card: card,
                     billing_details: {
-                        name: form.querySelector('[name="first_name"]').value + ' ' + 
-                              form.querySelector('[name="last_name"]').value,
+                        name: form.querySelector('[name="first_name"]').value + ' ' +
+                            form.querySelector('[name="last_name"]').value,
                         email: form.querySelector('[name="email"]').value,
                         address: {
                             line1: form.querySelector('[name="address"]').value,
@@ -139,21 +151,21 @@
                         }
                     }
                 });
-                
+
                 if (error) {
                     throw error;
                 }
-                
+
                 // Add payment method ID to form
                 const tokenInput = document.createElement('input');
                 tokenInput.type = 'hidden';
                 tokenInput.name = 'stripe_token';
                 tokenInput.value = paymentMethod.id;
                 form.appendChild(tokenInput);
-                
+
                 // Submit form
                 form.submit();
-                
+
             } catch (error) {
                 const errorElement = document.getElementById('card-errors');
                 errorElement.textContent = error.message;

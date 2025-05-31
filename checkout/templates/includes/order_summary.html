@@ -2,30 +2,24 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Product</th>
+                <th>Treatment</th>
+                <th>Time</th>
                 <th class="text-right">Price</th>
             </tr>
         </thead>
         <tbody>
             {% for item in bag_items %}
             <tr>
-                <td>{{ item.name }} x {{ item.quantity }}</td>
-                <td class="text-right">£{{ item.price }}</td>
+                <td>{{ item.treatment_title }}</td>
+                <td>{{ item.duration }} mins</td>
+                <td class="text-right">£{{ item.price|floatformat:2 }}</td>
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
-            <tr>
-                <th>Subtotal</th>
-                <td class="text-right">£{{ total_price|floatformat:2 }}</td>
-            </tr>
-            <tr>
-                <th>Shipping</th>
-                <td class="text-right">Free</td>
-            </tr>
             <tr class="font-weight-bold">
                 <th>Total</th>
-                <td class="text-right">£{{ total_price|floatformat:2 }}</td>
+                <td class="text-right" colspan="2">£{{ total_price|floatformat:2 }}</td>
             </tr>
         </tfoot>
     </table>
