@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Treatment{% endblock %}
+
+{% block content %}
+<header class="masthead masthead-banner">
+    <div class="container">
+        <div class="masthead-heading text-uppercase">Welcome, {{ user.username }}</div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="my-5">
+        <h1 class="text-center">Confirm Deletion</h1>
+        <p class="text-center">Are you sure you want to delete the treatment "{{ treatment.title }}"?</p>
+
+        <div class="d-flex justify-content-center align-items-center gap-2">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="">
+                        <button type="submit" class="btn btn-danger w-100 px-5 py-2">Yes, Delete</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="">
+                    <a href="{% url 'dashboard:dashboard' %}" class="btn btn-secondary w-100 px-5 py-2">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

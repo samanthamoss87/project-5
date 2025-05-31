@@ -12,6 +12,35 @@
 </header>
 
 <div class="container mt-4">
+  {% if user.is_superuser %}
+    <h2 class="mt-4">Treatments</h2>
+    <a href="{% url 'dashboard:treatment_add' %}" class="btn btn-primary mb-3">Add New Treatment</a>
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Price for 30 mins</th>
+          <th scope="col">Price for 1 hour</th>
+          <th scope="col">Price for 2 hours</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for treatment in treatments %}
+        <tr>
+          <td>{{ treatment.title }}</td>
+          <td>£{{ treatment.half_hour }}</td>
+          <td>£{{ treatment.one_hour }}</td>
+          <td>£{{ treatment.two_hour }}</td>
+          <td>
+            <a href="{% url 'dashboard:treatment_edit' treatment.pk %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'dashboard:treatment_delete' treatment.pk %}" class="btn btn-danger btn-sm">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
   <h2 class="mt-4">Upcoming Bookings</h2>
   {% if future_bookings %}
   <table class="table table-striped table-hover table-bordered">
@@ -45,7 +74,7 @@
   {% else %}
   <p>No upcoming bookings.</p>
   {% endif %}
-
+  
   <h2 class="mt-4">Past Bookings</h2>
   {% if past_bookings %}
   <table class="table table-striped table-hover table-bordered">
@@ -80,6 +109,7 @@
   <p>No past bookings.</p>
   {% endif %}
 
+  {% endif %}
 </div>
 
 {% endblock %}
