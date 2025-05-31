@@ -15,7 +15,6 @@ def add_to_bag(request):
         duration = int(request.POST.get('duration'))
         
         treatment = Treatments.objects.get(id=treatment_id)
-        # Calculate price based on duration
         if duration == 30:
             price = treatment.half_hour
         elif duration == 60:
@@ -33,7 +32,6 @@ def add_to_bag(request):
             'price': float(price),
         }
         
-        # Initialize or update bag in session
         if 'bag' not in request.session:
             request.session['bag'] = []
         
@@ -58,15 +56,12 @@ def view_bag(request):
 
 
 def remove_from_bag(request, item_id):
-    # Get the current items in the bag from the session
     bag_items = request.session.get('bag', [])
     
-    # Check and remove the item with the matching item_id
     updated_bag_items = [
         item for item in bag_items if item.get('id') != item_id
     ]
     
-    # Update the session with the new list
     request.session['bag'] = updated_bag_items
     request.session.modified = True
     
@@ -75,23 +70,20 @@ def remove_from_bag(request, item_id):
 
 @login_required
 def edit_booking(request, item_id):
-    # Ensure item_id is a string, since uuid generates string-based IDs
     item_id = str(item_id)
 
-    # Find the bag item based on the item_id in the session
     bag_items = request.session.get('bag', [])
     item_to_edit = next((item for item in bag_items if str(item['id']) == item_id), None)
 
     if not item_to_edit:
-        return redirect('view_bag')  # If item not found, return to the bag
-
-    # Fetch the booking object related to the item
+        return redirect('view_bag')
+    
     booking = get_object_or_404(Booking, id=item_to_edit['treatment_id'], user=request.user)
     
     if request.method == 'POST':
         form = BookingForm(request.POST, instance=booking)
         if form.is_valid():
-            form.save()  # Save the updated booking details
+            form.save()
             return redirect('view_bag')
     else:
         form = BookingForm(instance=booking)

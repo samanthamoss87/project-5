@@ -80,7 +80,6 @@
         const userConfirmed = confirm("Are you sure you want to remove this item from your bag?");
         
         if (userConfirmed) {
-            // Redirect to the remove URL with the item ID to perform removal
             window.location.href = "/bag/remove/" + itemId + "/";
         }
     }

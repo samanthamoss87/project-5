@@ -1,4 +1,3 @@
-<!-- dashboard/templates/dashboard/dashboard.html -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -13,8 +12,6 @@
 </header>
 
 <div class="container mt-4">
-
-  <!-- Display Future Bookings -->
   <h2 class="mt-4">Upcoming Bookings</h2>
   {% if future_bookings %}
   <table class="table table-striped table-hover table-bordered">
@@ -34,9 +31,9 @@
         <td>
           {% with booking.start_time as start_time %}
           {% if start_time.minute == 0 %}
-          {{ start_time|time:"g:00 A" }} <!-- Only show hour and ":00" if minute is 0 -->
+          {{ start_time|time:"g:00 A" }}
           {% else %}
-          {{ start_time|time:"g:i A" }} <!-- Show full time if there's a minute value -->
+          {{ start_time|time:"g:i A" }}
           {% endif %}
           {% endwith %}
         </td>
@@ -49,7 +46,6 @@
   <p>No upcoming bookings.</p>
   {% endif %}
 
-  <!-- Display Past Bookings -->
   <h2 class="mt-4">Past Bookings</h2>
   {% if past_bookings %}
   <table class="table table-striped table-hover table-bordered">
@@ -69,9 +65,9 @@
         <td>
           {% with booking.start_time as start_time %}
           {% if start_time.minute == 0 %}
-          {{ start_time|time:"g:00 A" }} <!-- Only show hour and ":00" if minute is 0 -->
+          {{ start_time|time:"g:00 A" }}
           {% else %}
-          {{ start_time|time:"g:i A" }} <!-- Show full time if there's a minute value -->
+          {{ start_time|time:"g:i A" }}
           {% endif %}
           {% endwith %}
         </td>

@@ -11,11 +11,10 @@
 {% block content %}
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="row w-100">
-            <div class="col-12 col-md-6 mx-auto"> <!-- Center form horizontally -->
+            <div class="col-12 col-md-6 mx-auto">
                 <h1 class="text-center">{% trans "Sign Out" %}</h1>
                 <p class="text-center">{% trans 'Are you sure you want to sign out?' %}</p>
                 
-                <!-- The logout form -->
                 {% url 'account_logout' as action_url %}
                 <form method="post" action="{{ action_url }}" class="text-center">
                     {% csrf_token %}

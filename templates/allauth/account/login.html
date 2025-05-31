@@ -23,7 +23,7 @@
 {% block content %}
     <div class="container w-100" style="margin-top: 150px; margin-bottom:50px;">
         <div class="row">
-            <div class="col-12 col-md-6 mx-auto"> <!-- Center the form horizontally -->
+            <div class="col-12 col-md-6 mx-auto">
                 <h1>{% trans "Sign In" %}</h1>
                 {% if not SOCIALACCOUNT_ONLY %}
                     {% setvar link %}
@@ -38,8 +38,7 @@
                     {% url 'account_login' as login_url %}
                     <form method="post" action="{{ login_url }}">
                         {% csrf_token %}
-                        <!-- Render the entire form with crispy styles -->
-                        {{ form|crispy }} <!-- This applies crispy styles to the form fields -->
+                        {{ form|crispy }}
                         {{ redirect_field }}
                         
                         <button type="submit" class="btn btn-primary w-100 mt-4">
@@ -48,7 +47,6 @@
                     </form>
                 {% endif %}
                 
-                <!-- Passkey and code login options -->
                 {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
                     <hr>
                     <div class="button-group">
@@ -65,7 +63,6 @@
                     </div>
                 {% endif %}
                 
-                <!-- Social login -->
                 {% if SOCIALACCOUNT_ENABLED %}
                     {% include "socialaccount/snippets/login.html" %}
                 {% endif %}
