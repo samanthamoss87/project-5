@@ -8,7 +8,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANG0_SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -96,25 +96,25 @@ STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
 STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
 
 """ For Production """
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('DB_NAME'),
-#         'USER': config('DB_USER'),
-#         'PASSWORD': config('DB_PASSWORD'),
-#         'HOST': config('DB_HOST'),
-#         'PORT': config('DB_PORT', default='5432', cast=int),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', default='5432', cast=int),
+    }
+}
 
 
 """ For Development """
-DATABASES = { 
-    'default': { 
-        'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': BASE_DIR / "db.sqlite3"
-    }
-}
+# DATABASES = { 
+#     'default': { 
+#         'ENGINE': 'django.db.backends.sqlite3', 
+#         'NAME': BASE_DIR / "db.sqlite3"
+#     }
+# }
 
 
 
@@ -156,7 +156,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-samanthamoss87-project5-xhachv1p04u.ws-eu120.gitpod.io',]
+CSRF_TRUSTED_ORIGINS = ['*',]
 
 
 SESSION_COOKIE_AGE = 7200
