@@ -156,7 +156,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['*',]
+CSRF_TRUSTED_ORIGINS = ['https://8000-samanthamoss87-project5-xhachv1p04u.ws-eu120.gitpod.io',]
 
 
 SESSION_COOKIE_AGE = 7200
