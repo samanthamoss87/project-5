@@ -35,7 +35,7 @@
                     <td>{{ item.date }}</td>
                     <td>{{ item.start_time }}</td>
                     <td>{{ item.duration }} mins</td>
-                    <td class="text-end">${{ item.price|floatformat:2 }}</td>
+                    <td class="text-end">£{{ item.price|floatformat:2 }}</td>
                     <td class="text-end">
                         {% if item.id %}
                         <a href="{% url 'remove_from_bag' item_id=item.id %}" class="btn btn-danger btn-sm" onclick="confirmRemove('{{ item.id }}')">Remove</a>
@@ -52,7 +52,7 @@
             <tfoot>
                 <tr>
                     <td colspan="4" class="text-end fw-bold">Total:</td>
-                    <td class="text-end fw-bold">${{ total_price|floatformat:2 }}</td>
+                    <td class="text-end fw-bold">£{{ total_price|floatformat:2 }}</td>
                 </tr>
             </tfoot>
         </table>

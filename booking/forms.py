@@ -7,9 +7,9 @@ from .models import  Booking, Contact
 
 class BookingForm(forms.ModelForm):
     DURATION_CHOICES = [
-        (30, '30 Minutes - $55'),
-        (60, '60 Minutes - $80'),
-        (120, '120 Minutes - $110'),
+        (30, '30 Minutes - £55'),
+        (60, '60 Minutes - £80'),
+        (120, '120 Minutes - £110'),
     ]
 
     duration = forms.ChoiceField(choices=DURATION_CHOICES, widget=forms.RadioSelect)
