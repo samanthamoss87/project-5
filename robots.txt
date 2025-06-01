@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /bag/ 
+Sitemap: https://thai-massage-v2-e74f25869c05.herokuapp.com/sitemap.xml
