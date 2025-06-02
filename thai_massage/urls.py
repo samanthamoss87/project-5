@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import handler404
+from .views import custom_404
 
+handler404 = 'thai_massage.views.custom_404'
 
 urlpatterns = [
     path('', include('booking.urls')),
@@ -13,4 +15,3 @@ urlpatterns = [
 ]
 
 
-handler404 = 'booking.views.custom_404'

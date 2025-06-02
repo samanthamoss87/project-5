@@ -8,7 +8,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANG0_SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -62,7 +62,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',   # requires by allauth
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'bag.context_processors.bag_total_price',
@@ -100,16 +100,6 @@ DATABASES = {
         'PORT': config('DB_PORT', default='5432', cast=int),
     }
 }
-
-
-""" For Development """
-# DATABASES = { 
-#     'default': { 
-#         'ENGINE': 'django.db.backends.sqlite3', 
-#         'NAME': BASE_DIR / "db.sqlite3"
-#     }
-# }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [

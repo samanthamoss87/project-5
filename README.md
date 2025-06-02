@@ -420,7 +420,7 @@ git clone https://github.com/samanthamoss87/project-5.git
 ```
 2. Open your IDE and open the folder you just cloned
 3. Install all the requirements with  ```pip install -r requirements.txt```
-4. Comment the production database seeting and add local development database in thai_massage/settings.py
+4. Comment the production database setting and add local development database in thai_massage/settings.py
 ```
 DATABASES = { 
     'default': { 
@@ -464,7 +464,8 @@ python manage.py runserver
 3. Connect your GitHub account from deployment method
 4. Search and Select your repository
 5. Click on Deploy
-6. Open terminal in heroku and run these commands to create all the tables
+6. Add your config variables in the settings tab
+7. Open terminal in heroku and run these commands to create all the tables
 ```
 python manage.py makemigrations
 python manage.py migrate
@@ -510,7 +511,6 @@ python manage.py createsuperuser
 
 # Bugs
 ## Known bugs
-- When admin and user login from the same browser, the username from userdashboard vanishes if the superuser doesn't have a name
 - Custom 404 Page is not working properly
 - User doesn't get any email after booking a schedule due to smtp server error
 - Privacy Policy and Terms and conditions page is not working as awaiting content from the client
