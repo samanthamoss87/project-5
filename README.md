@@ -18,71 +18,94 @@
     - [Treatments](#treatments)
     - [Book Now](#book-now)
     - [Login](#login)
+    - [SignUp](#signup)
+    - [Signout](#signout)
     - [Dashboard](#dashboard)
+    - [Bag](#bag)
+    - [Checkout](#checkout)
     - [Booking Success](#booking-success)
     - [Contact](#contact)
-4. [Future Implementations](#future-implementations)
-    - [Calendar View](#main-dashboard-calendar-view)
-    - [New Appointment Window (Modal/Popup)](#new-appointment-window-modalpopup)
-    - [Customer Wallet](#customer-wallet)
-5. [Technologies used](#technologies-used)
+    - [Reset Password](#reset-password)
+4. [Technologies used](#technologies-used)
     - [Languages](#languages)
+    - [Framework](#frameworks)
     - [Libraries](#libraries)
     - [Platforms](#platforms)
     - [Other Tools](#other-tools)
-6. [Local Development & Deployment](#local-development--deployment)
+5. [Local Development & Deployment](#local-development--deployment)
     - [Local Development](#local-development)
         - [Local Preparation](#local-preparation)
         - [Local Instruction](#local-instruction)
     - [Heroku Deployment](#heroku-deployment)
         - [Repository Setup](#setting-up-your-git-repository)
         - [Heroku Setup](#setting-up-the-heroku-app)
-7. [Testing](#testing)
+6. [Testing](#testing)
     - [Methods](#methods)
     - [Validation](#validation)
     - [General Testing](#general-testing)
     - [Mobile Testing](#mobile-testing)
     - [Desktop Testing](#desktop-testing)
-8. [Bugs](#bugs)
+7. [Bugs](#bugs)
     - [known bugs](#known-bugs)
- 
-9. [Credits](#credits)
+8. [Credits](#credits)
     - [Acknowledgement](#acknowledgement)
-10. [Contact](#contact)
+9. [Contact](#contact)
 
 
-# Project 4 - Important Notes
-For Project 4, I developed a booking system for a Thai Massage business, using HTML, CSS, JavaScript, Django, and Bootstrap. The site/system was designed to create a seamless and interactive user experience. The website allows customers to book and cancel appointments effortlessly. Django was utilised to powers the backend, handling user data, appointments bookings, deal withand administration functionality. Bootstrap ensures the site is fully responsive and visually consistent across various device types. Javascript handles sending emails, responsive navbar and time selections. This project not only demonstrates my ability to integrate multiple technologies but also provides a practical, real-world solution for managing bookings efficiently for a real business who upon completion/grading for this project, will utilise this booking system and look to have me build on these functionalities in the future.
+# Project 5: Thai Massage Booking System
+
+For Project 5, I developed a comprehensive and user-friendly booking system for a Thai Massage business using a combination of HTML, CSS, JavaScript, Django, Bootstrap, and various additional technologies. The goal was to create a seamless, interactive platform that streamlines the booking process while offering robust functionality for both customers and administrators.
+
+The booking system allows customers to effortlessly book and cancel appointments. By leveraging Django’s powerful backend capabilities, the system handles critical functionalities such as user management, appointment scheduling, and administrative operations. The use of Django-allauth ensures secure authentication and authorisation, allowing users to create accounts, log in, and manage their appointments with ease.
+
+I enhanced the user experience further by implementing different dashboard views for both superusers and normal users. The superuser dashboard offers full administrative access to view and manage all appointments, while the normal user dashboard provides a personalised view with their own booking history and the ability to make new appointments or cancel existing ones.
+
+To facilitate seamless transactions, I integrated a payment system, allowing customers to pay for their bookings online through secure payment methods. The cart functionality ensures that customers can add multiple services to their booking before proceeding to checkout, improving overall usability and convenience.
+
+An important feature of this project is the email notification system. I implemented an automated email feature that sends confirmation emails to customers after booking or cancelling an appointment. These emails contain key details about the appointment, including date, time, and service booked, providing users with immediate confirmation of their actions. Additionally, email reminders are sent to users before their scheduled appointments to ensure they don't miss their booking.
+
+The website’s front-end design uses Bootstrap to ensure full responsiveness and a visually consistent experience across various devices, from desktops to mobile phones. I also used JavaScript to handle key interactive elements, such as email notifications, responsive navigation, and time selection for bookings.
+
+This project not only demonstrates my ability to integrate multiple technologies to create a fully functional system but also provides a real-world solution to efficiently manage bookings for a business. Upon completion and grading, the business will begin using the system to handle real-time bookings, and they have expressed interest in having me further build upon the existing functionality to better meet their evolving needs.
 
 # User experience
 ## Goals
 ### Visitor Goals
-- Visitors who want to have best quality Thai massage can easily understand the range of massage services available .
-- Visitors who have an interest in massage can identify the service they require and make a appointment/booking. 
-- Visitors can manage their bookings, cancel appointments if necessary or make new/additional bookings
-- Visitors can create user accounts easily, login to make, cancel or check any bookings/appointments they may have.
-- Visitors upon making a booking can view their bookings on the booking dashboard
-- Visitors making a booking encounter a message advising their booking was successful with a link to view the bookings Dashboard.
-- Visitors can user the contact form to leave a message for Thai Massage team
+- Visitors seeking high-quality Thai massage services can easily explore and understand the full range of treatments available through the website.
+- Visitors interested in booking a massage can quickly identify the service they require and proceed with making an appointment or booking online.
+- Visitors can effortlessly manage their bookings, including the ability to cancel or reschedule appointments before making payments, as well as make new or additional bookings as needed.
+- Visitors can easily create a user account and securely log in to manage their bookings. The authentication system allows them to view, modify, or cancel any appointments they have, providing a **personalised** experience.
+- Upon logging in, visitors can access their **Dashboard**, where they can view all their confirmed and upcoming appointments in one place.
+- Visitors who successfully book an appointment will see a confirmation message and can view their previous and future bookings directly on the dashboard.
+- Visitors can use the **Contact Us** form to send messages or inquiries directly to the Thai Massage team, facilitating communication for further assistance or feedback.
 
 
 
-### User goals are
-- View /navigate the site and obtain information easily.
-- Get information on the different types of massages available
-- Contact the business via a number of different methods, phone, contact us and make a booking
-- Make a booking for a massage treatment
-- Cancel future bookings
-
+### User Goals
+- Easily view and navigate the site to obtain information about the Thai massage services offered.
+- Access detailed information about the different types of massage treatments available, helping users choose the service that best suits their needs.
+- Contact the business through multiple channels, including phone, the **Contact Us** form, or by making an online booking.
+- Make a booking for a massage treatment with ease, selecting the desired service and available time slot.
+- Securely make payments for bookings online, ensuring a smooth transaction process.
+- Reschedule or modify existing bookings before making payment based on their availability and preferences.
+- Cancel future bookings if necessary, ensuring flexibility in managing appointments.
+- View all current and past bookings on their personalised **Dashboard**.
+- Receive confirmation emails upon booking or cancelling, as well as reminders before upcoming appointments.
 
 
 ### Business Goals
-- Display and highlight the massage services available
-- Get an understanding about the cost and duration of various types of treatment
-- Get people to contact us to get more information.
-- Gain more customer bookings to grow the businesss.
-- The Massage business would like to grow and expand its business by taking bookings online via my booking portal.
-- The Massage business would like to increase sales when phone lines are busy and by allowing customers to make out of hours bookings.
+- **Display and highlight massage services available**: The website is designed to clearly present the full range of massage services, making it easy for customers to understand the treatments on offer.
+
+- **Provide information on cost, duration, and benefits**: Each treatment includes transparent details on cost, duration, and the benefits, helping customers make well-informed decisions.
+
+- **Encourage customer inquiries**: The site provides multiple methods for customers to contact the business, including phone, the **Contact Us** form, or by booking directly online for more information.
+
+- **Increase customer bookings to grow the business**: By offering a smooth and easy booking process, the business aims to drive more customer appointments and foster business growth.
+
+- **Enable online bookings for business expansion**: The business seeks to expand by offering customers the ability to book appointments online, reducing dependence on phone calls and improving operational efficiency.
+
+- **Increase sales with flexible booking options**: The website allows customers to book appointments during off-peak hours or when phone lines are busy, thus increasing the potential for more bookings and higher sales.
+
 
 
 
@@ -92,15 +115,19 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
     <img src="readme-images/user-story.png" alt="index mock up">
 </div> 
 
-- As a potential customer, I would like to see what relevant experiences the massage business can offer in my area.
-- I would like to see what types of therapy the massage business offers and specialises in.
-- As a customer looking at optimising the business's profitability and Growth iI would like to see what type of massage therapies are offered throughout my business.
-- While visiting a massage therapy website, I want to Navigate through their different types of  treatments seamlessly and have a direct link to contact them. 
-- I want to be able to contact the therapist with direct open-ended questions via a Contact us form.
-- I want to be able to review the site and get the detail I need easily without reading huge amount of text.
-- As a user I want to be able to use the site wherever I am in on any type/form of device and encounter an easy  way to navigate, find the information easily and make bookings in a time efficient manor. 
-- I would like book sessions from the website with different types of therapy, dates and times.
-- I would like to cancel any future scheduled appointments.
+- As a shopper, I want to register on the website so that I can create an account and access my bookings.
+- As a shopper, I want to log in to the website so that I can access my profile and manage bookings
+- As a shopper, I want to recover my password so that I can reset it if I forget my credentials
+
+- As a shopper, I want to book a treatment so that I can secure my appointment
+- As a shopper, I want to edit my booking so that I can update my treatment details if necessary
+- As a shopper, I want to pay for my booking through the website so that I can complete my treatment reservation
+- As a shopper, I want to delete my booking so that I can cancel any unwanted treatments
+
+- As a shopper, I want to view my user profile so that I can check my previous and future bookings
+
+- As a site owner, I want to add new treatments, edit and delete them so that I can add more treatments and modify them if needed
+
 
 
 
@@ -158,6 +185,14 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 - This Nav bar is fixed in place, so when you scroll down you can still access all pages.
 - If you click on the logo, it will take you back to the home page. 
 - Project 4 - There is now 5 pages, as there is a dashboard page added for the user to get more booking table of the future bookings
+- Added bag icon at the end of the navbar 
+
+<div align="center"> 
+    <img src="readme-images/nav-desktop-logged-in.png" alt="Nav bar">
+</div>
+
+- When user logged in to the site Dashboard will be seen in the navbar.
+- If user adds any treatment and unpaid it will show the amount.
 
 <div align="center"> 
     <img src="readme-images/nav-mobile.png" alt="Nav bar in phone format">
@@ -174,6 +209,7 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 - This is the look of the Hamburger Nav.
 - When you click on the Menu Button it brings the Nav list up.
 - If you click on the logo, it will take you back to the home page.
+- Bag icon added and takes to the bag page
 
 ## Footer
 <div align="center"> 
@@ -183,7 +219,7 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 - This footer is also accessible on all pages.
 - The footer also holds the Privacy Policy and Terms and Conditions but those are not working. You have to add you own terms and conditions and privacy policies.
 - The is aligned into the middle of the screen and always white in colour.
--  Project 4 - Twitter, Facebook, and LinkedIn social links added but they are not functional.
+-  All the links are working fine.
 
 
 <div align="center"> 
@@ -202,6 +238,7 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 - This is my main page Hero, I wanted to make it eye catching, stylish, easy to read, easy to navigate, while also been user friendly.
 - With hours of research I thought this image was the best way to convey the type of my business.
 
+
 <div align="center"> 
     <img src="readme-images/welcome-section.png" alt="Welcome Section">
 </div> 
@@ -214,7 +251,7 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
     <img src="readme-images/visit-us.png" alt="Our Information">
 </div> 
 
-- Project 4 - I created a section where people can find our place easily.
+- I created a section where people can find our place easily.
 - It gives the end user another direct link into the Booking page.
 
 
@@ -238,23 +275,64 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 
 ## Login
 <div align="center"> 
-    <img src="readme-images/login.png" alt="Login page">
+    <img src="readme-images/signin-desktop.png" alt="Login page">
 </div> 
 
-- Customer login page where user has to provide email and password to login.
+- Customer login page where user has to provide email/username and password to login.
 - User must have to be a registered user of Thai Siam Massage to login
 - There is a direct link to the register page if user is not registered
 
-
-
-## Dashboard
+## Signup
 <div align="center"> 
-    <img src="readme-images/dashboard.png" alt="Dashboard">
+    <img src="readme-images/signup.png" alt="Sign Up page">
 </div> 
 
-- After login user will redirected to the dashboard page
-- Future bookings of the user are displayed within a table
-- User can cancel any booking anytime with the cancel button
+- Customer can signup for the website.
+- User must have to provide real email
+- Form validation is handled by django-allauth
+
+
+## Signout
+<div align="center"> 
+    <img src="readme-images/signout.png" alt="Signout">
+</div> 
+
+- Sign out page comes with django-allauth
+
+## Dashboard
+- Created the dashbaord for multiple roles of user
+- Superuser can create, view, edit and delete treatments
+- Site user wil see their bookings.
+- If there is no booking it's just empty with some messages.
+- Dashboard for SUPER USER
+
+<div align="center"> 
+    <img src="readme-images/su-dashboard.png" alt="Superuser Dashboard">
+</div> 
+
+- Dashboard for SITE USER
+- User can only see the paid future bookings and booking in the past
+<div align="center"> 
+    <img src="readme-images/dashboard.png" alt="Site user dashboard">
+</div>
+
+## Bag
+<div align="center"> 
+    <img src="readme-images/bag.png" alt="Bag">
+</div>
+
+- User can edit or remove treatments from the bag
+- User can go to the booking page directly from here and add new treatments to the bag
+
+
+## Checkout
+<div align="center"> 
+    <img src="readme-images/checkout.png" alt="Checkout">
+</div>
+
+- Right now this checkout page runs STRIPE TEST PAYMENT
+- User can pay from the checkout page and make a booking
+
 
 
 ## Booking Success
@@ -262,8 +340,9 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
     <img src="readme-images/booking-success.png" alt="Booking Success">
 </div> 
 
-- After booking a schedule user will redirect to the booking success page
-- Direct link for user to navigate to the dashboard
+- After making the payment user will redirected to the successful page
+- All the order information is here
+
 
 
 ## Contact
@@ -275,72 +354,12 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 - User's message will send to the owner's email
 
 
-
-## Future Implementations
 ### Reset Password
-- If user forgot Username or password, user can reset their passwords through links from email
+<div align="center"> 
+    <img src="readme-images/reset-password.png" alt="Reset password">
+</div> 
 
-### Main Dashboard (Calendar View)
-- Time Slots: Start: 09:00 AM | End: 10:00 PM
-- Supports appointments on Hour, 30 mins, 15 mins
-- Drag and Drop for easy rescheduling
-- Colour-coded Gant-chart dashboard with each therapist displayed in a different colour and or column, type of massage, or status
-- Appointment Slots:
-    - Click on a time slot to open the New Appointment Window
-    - Neutral colour slots can be used as labels/comments
-
-
-### New Appointment Window (Modal/Popup)
-
-- Customer Details
-    - Name (Text Field)
-    - Phone Numbers (Multiple Supported)
-    - Duration (Dropdown: 15/30/45/60 mins, etc.)
-    - Therapist Requested? (Checkbox)
-
-- Massage Details
-    - Type of Massage (Dropdown)
-    - Colour Selection (15 colours)
-    - Repeat Appointment (Checkbox + Frequency Selector)
-
-
-
-- Pricing & Payment
-    - Automated Cost Calculation (Editable Field)
-    - Payment Received? (Checkbox for money tracking)
-    - Customer Wallet Payment Methods:
-        - Viva | Cash | Revolut | Voucher
-
-- Refund Button with Comments
-- Reminders & Confirmation
-- Send Confirmation? (Yes/No Toggle)
-- Comments & Notes
-- Visible Comments:
-    - Massage Type, Therapist Requested, Phone Number
-
-
-- Hidden Comments (Double Click to Access):
-    - Credit Balance/Vouchers & Prepayments
-    - Cancellation Debt (Red), Positive Balance (Green), Credit (Orange)
-
-
-### Customer Wallet
-- Balance Tracking
-    - Displays remaining balance
-    - Funds can be loaded via Viva, Cash, Revolut, Voucher
-    - Refund option available
-
-
-- Voucher Wallet
-    - Unique Voucher Numbers
-    - Payment via Viva, Cash, Revolut
-    - Balance Auto-Deducted on use
-    - Option to Transfer Voucher Balance to Customer Wallet
-
-
-- Cash Payments
-    - Separate tracking for two cash boxes
-
+- If user forgot Username or password, user can reset their passwords through links sent to user's email
 
 
 # Technologies used
@@ -354,6 +373,10 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 - [Python](https://www.python.org/)
     - Project Backend Language
 
+## Frameworks
+- [Django](https://www.djangoproject.com/)
+    - Project Backend
+
 ## Libraries 
 - [Google Fonts](https://fonts.google.com/)
     - Font style
@@ -361,6 +384,7 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
     - App Theme and Styling
 - [Email.js](https://www.emailjs.com/)
     - To send customer message to the admin's email
+
 ## Platforms
 - [Github](github.com)
     - Store the code remotely for deployment
@@ -374,7 +398,10 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
     - Project Database
 - [Postgresql](https://www.postgresql.org/)
     - Database
-
+- [Stripe](https://stripe.com/)
+    - Payment System
+- [Sendgrid](https://sendgrid.com/)
+    - SMTP Server
 
 # Local Development & Deployment
 ## Local Development
@@ -384,14 +411,16 @@ For Project 4, I developed a booking system for a Thai Massage business, using H
 - [Git](https://git-scm.com/)
 - [Python](https://www.python.org/downloads/)
 - [Django](https://www.djangoproject.com/)
+- [Stripe](https://stripe.com/)
 
 ### Local Instruction
 1. Clone the repository and go inside the folder
 ```
-git clone https://github.com/samanthamoss87/thai_massage.git
+git clone https://github.com/samanthamoss87/project-5.git
 ```
 2. Open your IDE and open the folder you just cloned
-3. Change the database configuration of the app in thai_massage/settings.py
+3. Install all the requirements with  ```pip install -r requirements.txt```
+4. Comment the production database seeting and add local development database in thai_massage/settings.py
 ```
 DATABASES = { 
     'default': { 
@@ -400,17 +429,22 @@ DATABASES = {
     }
 }
 ```
-4. Open the terminal and run these commands to create the database
+5. Create .env file and add your environment variables
+```
+STRIPE_TEST_PUBLIC_KEY='your_public_key'
+STRIPE_TEST_SECRET_KEY='your_secret_key
+```
+6. Open the terminal and run these commands to create the database
 ```
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
 ```
-5. Now run this command to run the website
+7. Now run this command to run the website
 ```
 python manage.py runserver
 ```
-4. Enjoy the site
+8. Enjoy the site
 
 ## Heroku Deployment
 ### Setting up your git repository
@@ -418,22 +452,26 @@ python manage.py runserver
 2. Put all the files to the repository folder
 3. Create a file called `.python-version` and add python version to it. e.g. 3.12
 4. Create a file called Procfile and add this to the file `web: gunicorn your-project-name.wsgi --log-file -`
-5. Replace `your-project-name` to your project name e.g. thai-massage
+5. Replace `your-project-name` to your project name e.g. thai-massage-v2
 6. Now run these commands to upload the files to Github 
     - `git add .`
     - `git commit -m "your commit message"`
     - `git push`
 
 ### Setting up the heroku app
-7. Login to your [Heroku](https://www.heroku.com/) account
-8. Create a new app and give it a name
-9. Connect your GitHub account from deployment method
-10. Search and Select your repository
-11. Click on Deploy
-
+1. Login to your [Heroku](https://www.heroku.com/) account
+2. Create a new app and give it a name
+3. Connect your GitHub account from deployment method
+4. Search and Select your repository
+5. Click on Deploy
+6. Open terminal in heroku and run these commands to create all the tables
+```
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+```
 
 # Testing
-
 ## Methods
 ### Validation 
 - HTML has been validated with https://validator.w3.org/#validate_by_input
@@ -441,20 +479,33 @@ python manage.py runserver
 - Links checked with https://validator.w3.org/checklink.
 - I also used https://pagespeed.web.dev/
 - Javascript codes have been validated with https://jshint.com/
+- Python codes are tested with [flake8](https://flake8.pycqa.org/en/latest/)
 
-### General Testing 
-- Each feature was testing when it implemented into the code on both safari and chrome.
-- The site was sent to family and friends to review and get their feedback.
-- Contact us form have validation and will not submit without all information filled in.
-- The images were testing on all devices and browsers for performance/load speed. 
+### Testing Overview
 
-### Mobile Testing
- - I tested the site on IOS and Android device using my phone and family members phone, going through the entire process, checking button, functions, load speed, style etc.         
-- Chrome and Microsoft edge was used to inspect the site in mobile format, looking at functions, responsiveness and style.
+#### General Testing
+- **Cross-Browser Testing**: Each feature was thoroughly tested upon implementation across multiple browsers, including Safari and Chrome, to ensure consistent functionality and design across platforms.
+- **User Feedback**: The website was shared with family, friends, and selected users for feedback on usability, design, and overall user experience. Feedback was carefully considered and implemented as necessary.
+- **Form Validation**: The "Contact Us" form has built-in client-side validation, ensuring that users cannot submit incomplete forms. Validation checks for required fields, proper input formats, and error handling.
+- **Image Optimisation & Performance**: All images were optimised for faster loading times and tested on various devices and browsers. Performance testing was conducted to ensure images load efficiently without degrading the user experience.
 
-### Desktop Testing 
-- The website was designed on Microsoft laptop, and it was previewed in Chrome and Microsoft edge. 
-- The website was tested by family and friends and numerous different devices.
+#### Mobile Testing
+- **Device Testing**: The website was tested across a variety of iOS and Android devices, including smartphones and tablets, to ensure responsiveness and a seamless mobile experience. Various screen sizes, resolutions, and operating system versions were considered.
+- **Functional Testing**: Extensive testing was performed on touch elements, such as buttons and navigation, to ensure smooth functionality on mobile devices. All interactive features were verified for responsiveness.
+- **Mobile Browser Testing**: Chrome and Microsoft Edge's mobile inspection tools were used to simulate different mobile environments and test the site’s mobile responsiveness, style, and functionality.
+- **Performance Testing**: Load speed and responsiveness were tested on mobile networks (both 3G and 4G) to ensure the website performs well under varying conditions.
+
+#### Desktop Testing
+- **Cross-Browser Compatibility**: The website was designed and tested on a Microsoft laptop and previewed in Chrome and Microsoft Edge to verify desktop compatibility. All features were checked to ensure proper display and behaviour on different browsers.
+- **Device Variety**: The site was tested on various desktop and laptop devices, including different screen sizes and resolutions, to ensure optimal user experience across all devices.
+- **Usability Testing**: The website was tested by family, friends, and colleagues on different desktop setups to identify any issues related to usability or accessibility. Feedback from this testing was used to make adjustments and improve the design.
+- **Responsive Layout**: The desktop version of the site was evaluated for proper alignment, spacing, and content organisation to ensure a user-friendly layout that adapts well to different screen sizes.
+
+#### Additional Testing
+- **Accessibility**: The website was tested for accessibility features to ensure compliance with WCAG (Web Content Accessibility Guidelines). This included testing for colour contrast, keyboard navigation, and screen reader compatibility.
+- **Security Testing**: Basic security testing was performed, such as verifying form field sanitisation and ensuring data integrity in user input.
+- **SEO Testing**: The website was tested for SEO best practices, including proper meta tags, heading hierarchy, alt text for images, and mobile-friendliness to enhance search engine ranking.
+
 
 
 # Bugs
@@ -464,6 +515,7 @@ python manage.py runserver
 - User doesn't get any email after booking a schedule due to smtp server error
 - Privacy Policy and Terms and conditions page is not working as awaiting content from the client
 - Automated git deployment is not working
+- Few pages of django-allauth doesn't inherit the base template
 
 
 # Credits
