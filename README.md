@@ -26,6 +26,7 @@
     - [Booking Success](#booking-success)
     - [Contact](#contact)
     - [Reset Password](#reset-password)
+    - [UI Design](#wireframe)
 4. [Technologies used](#technologies-used)
     - [Languages](#languages)
     - [Framework](#frameworks)
@@ -361,6 +362,10 @@ This project not only demonstrates my ability to integrate multiple technologies
 
 - If user forgot Username or password, user can reset their passwords through links sent to user's email
 
+### Wireframe
+[Link to UI](https://www.figma.com/design/KL5GAJFxMpNL8T0flXrlST/Project-5?node-id=1-5869&p=f&t=nXdmM9vNmHNDSCRU-0)
+- This is the intial design I came up with. Based on this design, completed the whole website.
+- I tried numerous fonts and design lay out inside Figma until I found the look and design I liked.
 
 # Technologies used
 ## Languages
