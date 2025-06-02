@@ -26,6 +26,7 @@
     - [Booking Success](#booking-success)
     - [Contact](#contact)
     - [Reset Password](#reset-password)
+    - [Page Not Found](#404)
     - [UI Design](#wireframe)
 4. [Technologies used](#technologies-used)
     - [Languages](#languages)
@@ -361,6 +362,14 @@ This project not only demonstrates my ability to integrate multiple technologies
 </div> 
 
 - If user forgot Username or password, user can reset their passwords through links sent to user's email
+
+
+### 404
+<div align="center"> 
+    <img src="readme-images/404.png" alt="Page not found">
+</div> 
+
+- If user hit any url that doesn't exists server will response a 404 page.
 
 ### Wireframe
 [Link to UI](https://www.figma.com/design/KL5GAJFxMpNL8T0flXrlST/Project-5?node-id=1-5869&p=f&t=nXdmM9vNmHNDSCRU-0)
