@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /accounts/
 Disallow: /bag/ 
-Sitemap: https://thai-massage-v2-e74f25869c05.herokuapp.com/sitemap.xml
+Sitemap: https://thai-siam-p5-15b6f90e100c.herokuapp.com/sitemap.xml
