@@ -33,3 +33,25 @@ def subscribe(request):
 
 def unsubscribe_page(request):
     return render(request, 'newsletter/unsubscribe.html')
+
+
+def unsubscribe(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            try:
+                subscriber = Subscribe.objects.get(email=email)
+                subscriber.is_active = False
+                subscriber.save()
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({'success': True, 'message': 'You have been unsubscribed successfully.'})
+                messages.success(request, 'You have been unsubscribed successfully.')
+            except Subscribe.DoesNotExist:
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({'success': False, 'message': 'Email not found in our subscription list.'})
+                messages.error(request, 'Email not found in our subscription list.')
+        else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': 'Please enter a valid email address.'})
+        return redirect('unsubscribe_page')
+    return redirect('unsubscribe_page')
