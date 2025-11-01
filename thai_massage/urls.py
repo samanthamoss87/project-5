@@ -12,6 +12,7 @@ urlpatterns = [
     path('bag/', include('bag.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('checkout/', include('checkout.urls')),
+    path('newsletter/', include('newsletter.urls'))
 ]
 
 
