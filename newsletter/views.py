@@ -29,3 +29,7 @@ def subscribe(request):
                 return JsonResponse({'success': False, 'message': 'Please enter a valid email address.'})
         return redirect('home')
     return redirect('home')
+
+
+def unsubscribe_page(request):
+    return render(request, 'newsletter/unsubscribe.html')
