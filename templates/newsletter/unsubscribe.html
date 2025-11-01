@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Unsubscribe{% endblock %}
+
+{% block content %}
+<section class="page-section" id="unsubscribe">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Unsubscribe from Newsletter</h2>
+            <h3 class="section-subheading text-muted">We're sorry to see you go!</h3>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <form id="unsubscribe-form" method="post" action="{% url 'unsubscribe' %}">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <input class="form-control" type="email" name="email" id="unsubscribe-email" placeholder="Enter your email address" required>
+                    </div>
+                    <div id="unsubscribe-message" class="mb-3" style="display: none;"></div>
+                    <div class="text-center">
+                        <button class="btn btn-primary text-uppercase" type="submit" id="unsubscribe-btn">Unsubscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    document.getElementById('unsubscribe-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const form = this;
+        const btn = document.getElementById('unsubscribe-btn');
+        const messageDiv = document.getElementById('unsubscribe-message');
+        
+        btn.disabled = true;
+        btn.textContent = 'Processing...';
+        
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: new URLSearchParams(new FormData(form))
+        })
+        .then(response => response.json())
+        .then(data => {
+            messageDiv.style.display = 'block';
+            messageDiv.className = data.success ? 'alert alert-success' : 'alert alert-danger';
+            messageDiv.textContent = data.message;
+            
+            if (data.success) {
+                form.reset();
+            }
+        })
+        .catch(error => {
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'alert alert-danger';
+            messageDiv.textContent = 'An error occurred. Please try again.';
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.textContent = 'Unsubscribe';
+        });
+    });
+</script>
+{% endblock %}
