@@ -27,6 +27,8 @@ def treatments(request):
 
 @login_required
 def book_now(request):
+    treatments_list = Treatments.objects.all()
+    
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
@@ -35,13 +37,12 @@ def book_now(request):
             booking.duration = int(form.cleaned_data['duration'])
             booking.save()
             return redirect('booking_success')
-
         else:
-            render(request, 'booking.html', {'form': form})
+            return render(request, 'booking.html', {'form': form, 'treatments': treatments_list})
     else:
         form = BookingForm()
     
-    return render(request, 'booking.html', {'form': form})
+    return render(request, 'booking.html', {'form': form, 'treatments': treatments_list})
 
 
 def booking_success(request):

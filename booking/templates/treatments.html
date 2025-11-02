@@ -1,54 +1,103 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Treatments - Thai Siam Massage {% endblock %}
+{% block title %} Treatments {% endblock %}
+
+{% block extra_css %}
+<style>
+  .price-box {
+    transition: all 0.3s ease;
+  }
+  .price-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .duration {
+    font-weight: bold;
+    color: #666;
+  }
+  .price {
+    font-size: 1.2em;
+  }
+  .card {
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+</style>
+{% endblock extra_css %}
+
 
 {% block content %}
 
 <header class="masthead masthead-banner">
   <div class="container">
     <div class="masthead-heading text-uppercase">Our Treatments</div>
+    <div class="masthead-subheading">Experience authentic Thai massage therapy</div>
   </div>
 </header>
 
 <section class="page-section" id="treatment">
   <div class="container">
-    <div class="row justify-content-center align-items-start mb-5">
-      <div class="col-lg-6 col-sm-12">
-        <h2 class="treatment-heading text-uppercase">Our Top Treatments</h2>
-        <p class="treatment-subheading text-muted">30, 60, 120 Minutes</p>
-      </div>
-      <div class="col-lg-6 col-sm-12 mt-3">
-        <a href="{% url 'book_now' %}" class="btn btn-outline-success text-uppercase btn-lg">
-          Book Your Treatment
-        </a>
-      </div>
+    <div class="text-center mb-5">
+      <h2 class="section-heading text-uppercase">Professional Thai Massage Services</h2>
+      <h3 class="section-subheading text-muted">Choose from our range of therapeutic treatments</h3>
     </div>
 
     {% if treatments %}
-      {% for treatment in treatments %}
-        {% if forloop.counter0|divisibleby:2 %}
-          <div class="row mb-5">
-        {% endif %}
-        
-        <div class="col-lg-6 col-sm-12">
-          <div class="treatments">
-            <h3 class="treatments-title">{{ treatment.title }}</h3>
-            <p class="treatments-price">
-              &#8364; {{treatment.half_hour}} .... &#8364;{{treatment.one_hour}} .... &#8364;{{treatment.two_hour}}
-            </p>
-            <p class="treatments-description">
-              {{ treatment.description }}
-            </p>
+      <div class="row">
+        {% for treatment in treatments %}
+        <div class="col-lg-6 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title text-success">{{ treatment.title }}</h4>
+              <p class="card-text flex-grow-1">{{ treatment.description }}</p>
+              
+              <div class="pricing-section mt-3">
+                <h5 class="text-dark mb-3">Treatment Pricing:</h5>
+                <div class="row text-center">
+                  <div class="col-4">
+                    <div class="price-box p-2 border rounded">
+                      <div class="duration">30 min</div>
+                      <div class="price text-success font-weight-bold">£{{ treatment.half_hour }}</div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="price-box p-2 border rounded bg-light">
+                      <div class="duration">60 min</div>
+                      <div class="price text-success font-weight-bold">£{{ treatment.one_hour }}</div>
+                      <small class="text-muted">Popular</small>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="price-box p-2 border rounded">
+                      <div class="duration">120 min</div>
+                      <div class="price text-success font-weight-bold">£{{ treatment.two_hour }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-4">
+                <a href="{% url 'book_now' %}" class="btn btn-success btn-block">Book Treatment</a>
+              </div>
+            </div>
           </div>
         </div>
-
-        {% if forloop.counter|divisibleby:2 or forloop.last %}
-          </div>
-        {% endif %}
-      {% endfor %}
+        {% endfor %}
+      </div>
+      
+      <div class="text-center mt-5">
+        <a href="{% url 'book_now' %}" class="btn btn-outline-success btn-lg text-uppercase px-5">
+          Book Your Treatment Now
+        </a>
+      </div>
     {% else %}
-      <p class="text-center">No treatments available at the moment</p>
+      <div class="text-center">
+        <p class="lead">No treatments available at the moment</p>
+        <p>Please check back later or contact us for more information.</p>
+      </div>
     {% endif %}
   </div>
 </section>
