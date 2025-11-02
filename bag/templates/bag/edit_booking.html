@@ -1,4 +1,3 @@
-<!-- edit_booking_in_bag.html -->
 {% extends 'base.html' %}
 
 {% block title %} Edit Booking - Thai Siam Massage {% endblock %}
@@ -12,8 +11,8 @@
 
 <section class="page-section" id="booking">
     <div class="container">
-        <div class="row flex justify-content-center align-items-center">
-            <div class="col-lg-6 col-sm-12">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
                 {% if form.errors %}
                 <div class="alert alert-danger">
                     <strong>Error!</strong> Please correct the following:
@@ -27,36 +26,121 @@
                 </div>
                 {% endif %}
 
-                <form method="post" action="{% url 'edit_booking' item_id=item_id %}" id="booking-form">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label class="form-label">Select Treatment:</label>
-                        {{ form.treatment }}
+                <div class="card shadow">
+                    <div class="card-header bg-warning text-white">
+                        <h4 class="mb-0">Edit Your Booking</h4>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Select Duration:</label>
-                        {% for choice in form.duration %}
-                            <div class="form-check">
-                                {{ choice.tag }}
-                                <label class="form-check-label" for="{{ choice.id_for_label }}">
-                                    {{ choice.choice_label }}
-                                </label>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'edit_booking' item_id=item_id %}" id="booking-form">
+                            {% csrf_token %}
+                            
+                            <div class="mb-4">
+                                <label class="form-label h5">Select Treatment:</label>
+                                {{ form.treatment }}
                             </div>
-                        {% endfor %}
+                            
+                            <div class="mb-4">
+                                <label class="form-label h5">Select Duration & Price:</label>
+                                <div id="duration-options">
+                                    {% for choice in form.duration %}
+                                    <div class="form-check mb-2">
+                                        {{ choice.tag }}
+                                        <label class="form-check-label" for="{{ choice.id_for_label }}">
+                                            <span class="duration-text">{{ choice.choice_label }}</span>
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_date" class="form-label h5">Date:</label>
+                                    {{ form.date }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_start_time" class="form-label h5">Start Time:</label>
+                                    {{ form.start_time }}
+                                </div>
+                            </div>
+                            
+                            <div class="price-display mb-4 p-3 bg-light rounded">
+                                <h5>Total Price: <span id="total-price" class="text-success">£{{ item_to_edit.price }}</span></h5>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-warning btn-lg flex-fill">Update Booking</button>
+                                <a href="{% url 'view_bag' %}" class="btn btn-secondary btn-lg">Cancel</a>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="id_date" class="form-label">Date:</label>
-                        {{ form.date }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_start_time" class="form-label">Start Time:</label>
-                        {{ form.start_time }}
-                    </div>
-                    <button type="submit" class="btn btn-outline-success btn-lg w-100">Update Booking</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const treatmentSelect = document.getElementById('id_treatment');
+    const durationRadios = document.querySelectorAll('input[name="duration"]');
+    const totalPriceElement = document.getElementById('total-price');
+    
+    // Treatment pricing data
+    const treatmentPrices = {
+        {% for treatment in treatments %}
+        '{{ treatment.id }}': {
+            '30': {{ treatment.half_hour }},
+            '60': {{ treatment.one_hour }},
+            '120': {{ treatment.two_hour }}
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    };
+    
+    function updatePricing() {
+        const selectedTreatment = treatmentSelect.value;
+        
+        if (selectedTreatment && treatmentPrices[selectedTreatment]) {
+            // Update duration labels with current treatment prices
+            durationRadios.forEach(radio => {
+                const label = radio.nextElementSibling;
+                const durationValue = radio.value;
+                const treatmentPrice = treatmentPrices[selectedTreatment][durationValue];
+                
+                if (treatmentPrice) {
+                    const durationText = durationValue + ' Minutes - £' + parseFloat(treatmentPrice).toFixed(2);
+                    label.querySelector('.duration-text').textContent = durationText;
+                }
+            });
+            
+            // Update total price if duration is selected
+            const selectedDuration = document.querySelector('input[name="duration"]:checked');
+            if (selectedDuration) {
+                const price = treatmentPrices[selectedTreatment][selectedDuration.value];
+                totalPriceElement.textContent = '£' + parseFloat(price).toFixed(2);
+            }
+        }
+    }
+    
+    function updateTotalPrice() {
+        const selectedTreatment = treatmentSelect.value;
+        const selectedDuration = document.querySelector('input[name="duration"]:checked');
+        
+        if (selectedTreatment && selectedDuration && treatmentPrices[selectedTreatment]) {
+            const price = treatmentPrices[selectedTreatment][selectedDuration.value];
+            totalPriceElement.textContent = '£' + parseFloat(price).toFixed(2);
+        }
+    }
+    
+    // Event listeners
+    treatmentSelect.addEventListener('change', updatePricing);
+    durationRadios.forEach(radio => {
+        radio.addEventListener('change', updateTotalPrice);
+    });
+    
+    // Initial update
+    updatePricing();
+});
+</script>
 
 {% endblock %}
