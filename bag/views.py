@@ -71,27 +71,57 @@ def remove_from_bag(request, item_id):
 @login_required
 def edit_booking(request, item_id):
     item_id = str(item_id)
-
     bag_items = request.session.get('bag', [])
     item_to_edit = next((item for item in bag_items if str(item['id']) == item_id), None)
 
     if not item_to_edit:
         return redirect('view_bag')
     
-    booking = get_object_or_404(Booking, id=item_to_edit['treatment_id'], user=request.user)
-    
     if request.method == 'POST':
-        form = BookingForm(request.POST, instance=booking)
-        if form.is_valid():
-            form.save()
-            return redirect('view_bag')
+        treatment_id = request.POST.get('treatment')
+        date = request.POST.get('date')
+        start_time = request.POST.get('start_time')
+        duration = int(request.POST.get('duration'))
+        
+        treatment = Treatments.objects.get(id=treatment_id)
+        if duration == 30:
+            price = treatment.half_hour
+        elif duration == 60:
+            price = treatment.one_hour
+        elif duration == 120:
+            price = treatment.two_hour
+        
+        # Update the item in the bag
+        for i, item in enumerate(bag_items):
+            if str(item['id']) == item_id:
+                bag_items[i].update({
+                    'treatment_id': treatment.id,
+                    'treatment_title': treatment.title,
+                    'date': date,
+                    'start_time': start_time,
+                    'duration': duration,
+                    'price': float(price),
+                })
+                break
+        
+        request.session['bag'] = bag_items
+        request.session.modified = True
+        return redirect('view_bag')
     else:
-        form = BookingForm(instance=booking)
+        # Create form with current item data
+        form = BookingForm(initial={
+            'treatment': item_to_edit['treatment_id'],
+            'date': item_to_edit['date'],
+            'start_time': item_to_edit['start_time'],
+            'duration': item_to_edit['duration'],
+        })
 
+    treatments_list = Treatments.objects.all()
     context = {
         'form': form,
         'item_id': item_id,
-        'item_to_edit': item_to_edit
+        'item_to_edit': item_to_edit,
+        'treatments': treatments_list
     }
 
     return render(request, 'bag/edit_booking.html', context)
