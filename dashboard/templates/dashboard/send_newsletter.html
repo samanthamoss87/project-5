@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Send Newsletter - {{ treatment.title }}{% endblock %}
+
+{% block content %}
+<section class="page-section" id="send-newsletter">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Send Newsletter</h2>
+            <h3 class="section-subheading text-muted">{{ treatment.title }}</h3>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Treatment Details</h5>
+                        <p><strong>Title:</strong> {{ treatment.title }}</p>
+                        <p><strong>Prices:</strong></p>
+                        <ul>
+                            <li>30 minutes: £{{ treatment.half_hour }}</li>
+                            <li>1 hour: £{{ treatment.one_hour }}</li>
+                            <li>2 hours: £{{ treatment.two_hour }}</li>
+                        </ul>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <label for="description" class="form-label">Newsletter Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="6" 
+                                    placeholder="Write a compelling description for this treatment newsletter..." required></textarea>
+                                <small class="form-text text-muted">This description will be sent to all active subscribers.</small>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success btn-lg">Send Newsletter</button>
+                                <a href="{% url 'dashboard:dashboard' %}" class="btn btn-secondary btn-lg">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

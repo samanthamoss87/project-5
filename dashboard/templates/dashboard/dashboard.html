@@ -35,6 +35,7 @@
           <td>
             <a href="{% url 'dashboard:treatment_edit' treatment.pk %}" class="btn btn-warning btn-sm">Edit</a>
             <a href="{% url 'dashboard:treatment_delete' treatment.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            <a href="{% url 'dashboard:send_newsletter' treatment.pk %}" class="btn btn-success btn-sm">Send Newsletter</a>
           </td>
         </tr>
         {% endfor %}
