@@ -114,6 +114,26 @@
 
     <footer class="footer py-4">
         <div class="container">
+            <!-- Newsletter Section -->
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <h5 class="text-white mb-3">Stay Updated with Our Newsletter</h5>
+                    <p class="text-white-50 mb-3">Get the latest updates on our treatments and special offers!</p>
+                    <form id="newsletter-form" method="post" action="{% url 'subscribe' %}" class="d-flex justify-content-center">
+                        {% csrf_token %}
+                        <div class="input-group" style="max-width: 400px;">
+                            <input type="email" name="email" id="newsletter-email" class="form-control" placeholder="Enter your email" required>
+                            <button class="btn btn-success" type="submit" id="newsletter-btn">Subscribe</button>
+                        </div>
+                    </form>
+                    <div id="newsletter-message" class="mt-2" style="display: none;"></div>
+                    <small class="text-white-50 mt-2 d-block">
+                        <a href="{% url 'unsubscribe_page' %}" class="text-white-50">Unsubscribe</a>
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Existing Footer Content -->
             <div class="row align-items-center">
                 <div class="col-lg-4 text-lg-start">Copyright &copy; Thai Siam Massage 2025</div>
                 <div class="col-lg-4 my-3 my-lg-0">
@@ -143,6 +163,49 @@
             </div>
         </div>
     </footer>
+
+    <script>
+    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const form = this;
+        const email = document.getElementById('newsletter-email').value;
+        const btn = document.getElementById('newsletter-btn');
+        const messageDiv = document.getElementById('newsletter-message');
+        
+        btn.disabled = true;
+        btn.textContent = 'Subscribing...';
+        
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: new URLSearchParams(new FormData(form))
+        })
+        .then(response => response.json())
+        .then(data => {
+            messageDiv.style.display = 'block';
+            messageDiv.className = data.success ? 'alert alert-success mt-2' : 'alert alert-danger mt-2';
+            messageDiv.textContent = data.message;
+            
+            if (data.success) {
+                form.reset();
+            }
+        })
+        .catch(error => {
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'alert alert-danger mt-2';
+            messageDiv.textContent = 'An error occurred. Please try again.';
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.textContent = 'Subscribe';
+        });
+    });
+    </script>
 
     {% block postloadjs %}
     {% endblock %}
