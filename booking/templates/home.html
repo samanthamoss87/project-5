@@ -1,58 +1,416 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Home {% endblock %}
+{% block title %} Home - Thai Siam Massage {% endblock %}
+
+{% block extra_css %}
+<style>
+    .service-item {
+        margin-bottom: 30px;
+    }
+
+    .service-link {
+        position: relative;
+        display: block;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .service-hover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(25, 135, 84, 0.9);
+        opacity: 0;
+        transition: all ease 0.5s;
+    }
+
+    .service-hover:hover {
+        opacity: 1;
+    }
+
+    .service-hover-content {
+        position: absolute;
+        width: 100%;
+        height: 20px;
+        font-size: 20px;
+        text-align: center;
+        top: 50%;
+        margin-top: -12px;
+        color: white;
+    }
+
+    .service-caption {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: white;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .service-caption-heading {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+
+    .service-caption-subheading {
+        font-style: italic;
+        font-family: "Roboto Slab", serif;
+    }
+
+    .testimonial-item {
+        padding: 30px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        height: 100%;
+    }
+
+    .testimonial-text {
+        font-style: italic;
+        margin: 20px 0;
+    }
+
+    .info-item {
+        overflow: hidden;
+    }
+
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock extra_css %}
 
 {% block content %}
 
 <header class="masthead">
     <div class="container">
         <div class="masthead-heading text-uppercase">Thai Siam Massage</div>
-        <div class="masthead-subheading">Thai massage therapist in Germasogeia, Cyprus</div>
+        <div class="masthead-subheading">Authentic Thai Massage Therapy in Cyprus</div>
+        <a class="btn btn-success btn-xl text-uppercase" href="{% url 'book_now' %}">Book Your Treatment</a>
     </div>
 </header>
 
-<section class="page-section" id="about">
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6 col-sm-12">
-            <h3 class="about-heading">Welcome to Thai Siam Massage</h3>
+<section class="page-section bg-light" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Welcome to Thai Siam Massage</h2>
+            <h3 class="section-subheading text-muted">Experience authentic Thai healing traditions</h3>
         </div>
-        <div class="col-lg-6 col-sm-12">
-            <p class="about-lead">Come and meet our highly professional, qualified and experienced  therapists in our Cyprus premises. Our services will leave you feeling  pampared with a rejuvenating facial, a relaxing body scrub and massage.</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<section class="page-section" id="booking">
-<div class="container">
-    <div class="row d-flex justify-content-center align-items-center">
-        <div class="booking-img-container col-lg-6 col-sm-12">
-            <img class="booking-img" src="{% static 'booking/assets/img/booking.webp' %}" alt="Book your treatment">
-        </div>
-        <div class="col-lg-6 col-sm-12">
-            <h2 class="booking-heading">Visit Our Place</h2>
-
-            <div class="booking-address">
-                <p>Address:</p>
-                <p>Vasileos Georgiou I, 70a Potamos Germasogeias, Germasogeia, Municipality 4048, Cyprus</p>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x text-success"></i>
+                    <i class="fas fa-spa fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="my-3">Professional Therapists</h4>
+                <p class="text-muted">Highly qualified and experienced Thai massage therapists with authentic training.</p>
             </div>
-            <div class="booking-contact">
-                <p>Contact:</p>
-                <p>(+357) 99 256 453</p>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x text-success"></i>
+                    <i class="fas fa-leaf fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="my-3">Natural Healing</h4>
+                <p class="text-muted">Traditional Thai massage techniques using natural methods for holistic wellness.</p>
             </div>
-            <div class="booking-hours">
-                <p>Opening Hours:</p>
-                <p>Monday - Sunday: 9:00 am - 10:00 pm</p>
-            </div>
-            <div class="booking-btn">
-                <a href="{% url 'book_now' %}" class="btn btn-outline-success btn-lg text-uppercase mt-5 ">Book Your treatment</a>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x text-success"></i>
+                    <i class="fas fa-heart fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="my-3">Relaxation & Wellness</h4>
+                <p class="text-muted">Rejuvenate your body and mind with our therapeutic massage treatments.</p>
             </div>
         </div>
     </div>
-</div>
 </section>
+
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Our Services</h2>
+            <h3 class="section-subheading text-muted">Choose from our range of therapeutic treatments</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="service-item">
+                    <div class="service-link">
+                        <div class="service-hover">
+                            <div class="service-hover-content">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'booking/assets/img/service1.jpg' %}" alt="Traditional Thai Massage" />
+                    </div>
+                    <div class="service-caption">
+                        <div class="service-caption-heading">Traditional Thai Massage</div>
+                        <div class="service-caption-subheading text-muted">Ancient healing techniques</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="service-item">
+                    <div class="service-link">
+                        <div class="service-hover">
+                            <div class="service-hover-content">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'booking/assets/img/service2.jpg' %}" alt="Oil Massage" />
+                    </div>
+                    <div class="service-caption">
+                        <div class="service-caption-heading">Oil Massage</div>
+                        <div class="service-caption-subheading text-muted">Deep relaxation therapy</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <div class="service-item">
+                    <div class="service-link">
+                        <div class="service-hover">
+                            <div class="service-hover-content">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'booking/assets/img/service3.jpg' %}" alt="Foot Massage" />
+                    </div>
+                    <div class="service-caption">
+                        <div class="service-caption-heading">Foot Massage</div>
+                        <div class="service-caption-subheading text-muted">Reflexology treatment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <a class="btn btn-outline-success btn-lg text-uppercase" href="{% url 'treatments' %}">View All Treatments</a>
+        </div>
+    </div>
+</section>
+
+<section class="page-section bg-light" id="why-choose-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="section-heading text-uppercase">Why Choose Thai Siam Massage?</h2>
+                <div class="row mt-4">
+                    <div class="col-12 mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-success fa-2x"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5>Authentic Thai Techniques</h5>
+                                <p class="text-muted">Traditional massage methods passed down through generations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-success fa-2x"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5>Experienced Therapists</h5>
+                                <p class="text-muted">Certified professionals with years of experience in Thai massage.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle text-success fa-2x"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5>Relaxing Environment</h5>
+                                <p class="text-muted">Peaceful and clean facilities designed for your comfort.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img class="img-fluid rounded" src="{% static 'booking/assets/img/why-choose-us.jpg' %}" alt="Thai Massage Environment" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="page-section" id="pricing">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Our Pricing</h2>
+            <h3 class="section-subheading text-muted">Affordable wellness for everyone</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <h4 class="card-title">30 Minutes</h4>
+                        <h2 class="text-success">£55</h2>
+                        <p class="card-text">Perfect for a quick relaxation session</p>
+                        <ul class="list-unstyled">
+                            <li>✓ Traditional Thai techniques</li>
+                            <li>✓ Stress relief</li>
+                            <li>✓ Muscle tension release</li>
+                        </ul>
+                        <a href="{% url 'book_now' %}" class="btn btn-success">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow border-success">
+                    <div class="card-header bg-success text-white text-center">
+                        <h5 class="mb-0">Most Popular</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h4 class="card-title">60 Minutes</h4>
+                        <h2 class="text-success">£80</h2>
+                        <p class="card-text">Complete relaxation experience</p>
+                        <ul class="list-unstyled">
+                            <li>✓ Full body massage</li>
+                            <li>✓ Deep muscle therapy</li>
+                            <li>✓ Improved circulation</li>
+                            <li>✓ Mental relaxation</li>
+                        </ul>
+                        <a href="{% url 'book_now' %}" class="btn btn-success">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <h4 class="card-title">120 Minutes</h4>
+                        <h2 class="text-success">£110</h2>
+                        <p class="card-text">Ultimate wellness package</p>
+                        <ul class="list-unstyled">
+                            <li>✓ Extended therapy session</li>
+                            <li>✓ Complete body restoration</li>
+                            <li>✓ Maximum stress relief</li>
+                            <li>✓ Holistic healing</li>
+                        </ul>
+                        <a href="{% url 'book_now' %}" class="btn btn-success">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location Section -->
+<section class="page-section bg-light" id="location">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-heading text-uppercase">Visit Our Place</h2>
+                <div class="location-info">
+                    <div class="info-item mb-3">
+                        <i class="fas fa-map-marker-alt text-success fa-2x float-start me-3"></i>
+                        <div>
+                            <h5>Address</h5>
+                            <p class="text-muted">Vasileos Georgiou I, 70a Potamos Germasogeias<br>Germasogeia, Municipality 4048, Cyprus</p>
+                        </div>
+                    </div>
+                    <div class="info-item mb-3">
+                        <i class="fas fa-phone text-success fa-2x float-start me-3"></i>
+                        <div>
+                            <h5>Contact</h5>
+                            <p class="text-muted">(+357) 99 256 453</p>
+                        </div>
+                    </div>
+                    <div class="info-item mb-3">
+                        <i class="fas fa-clock text-success fa-2x float-start me-3"></i>
+                        <div>
+                            <h5>Opening Hours</h5>
+                            <p class="text-muted">Monday - Sunday: 9:00 AM - 10:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'book_now' %}" class="btn btn-success btn-lg text-uppercase mt-3">Book Your Treatment</a>
+            </div>
+            <div class="col-lg-6">
+                <img class="img-fluid rounded shadow" src="{% static 'booking/assets/img/booking.webp' %}" alt="Thai Siam Massage Location">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="page-section" id="testimonials">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">What Our Clients Say</h2>
+            <h3 class="section-subheading text-muted">Real experiences from satisfied customers</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="testimonial-item text-center">
+                    <div class="testimonial-img">
+                        <i class="fas fa-user-circle fa-5x text-success mb-3"></i>
+                    </div>
+                    <p class="testimonial-text">"Amazing experience! The therapists are highly skilled and the atmosphere is so relaxing. I feel completely rejuvenated after every session."</p>
+                    <h5 class="testimonial-name">Sarah M.</h5>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="testimonial-item text-center">
+                    <div class="testimonial-img">
+                        <i class="fas fa-user-circle fa-5x text-success mb-3"></i>
+                    </div>
+                    <p class="testimonial-text">"Best Thai massage in Cyprus! The traditional techniques really work wonders for my back pain. Highly recommended!"</p>
+                    <h5 class="testimonial-name">Michael K.</h5>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="testimonial-item text-center">
+                    <div class="testimonial-img">
+                        <i class="fas fa-user-circle fa-5x text-success mb-3"></i>
+                    </div>
+                    <p class="testimonial-text">"Professional service and authentic Thai massage. The booking system is so convenient. I'm a regular customer now!"</p>
+                    <h5 class="testimonial-name">Elena P.</h5>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="page-section bg-success text-white" id="cta">
+    <div class="container text-center">
+        <h2 class="section-heading text-uppercase text-white">Ready to Experience Thai Siam Massage?</h2>
+        <h3 class="section-subheading text-white-50">Book your appointment today and discover the healing power of authentic Thai massage</h3>
+        <a class="btn btn-light btn-xl text-uppercase mt-3" href="{% url 'book_now' %}">Book Now</a>
+        <a class="btn btn-outline-light btn-xl text-uppercase mt-3 ms-3" href="{% url 'contact' %}">Contact Us</a>
+    </div>
+</section>
+
+
+
+
 {% endblock %}
-        
-        
