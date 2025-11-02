@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation - Thai Siam Massage</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #198754; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background-color: #f9f9fa; }
+        .order-details { background-color: white; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .booking-item { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .booking-item:last-child { border-bottom: none; }
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+        .success-icon { color: #198754; font-size: 48px; text-align: center; margin: 20px 0; }
+        .order-info { margin: 10px 0; }
+        .total { font-size: 18px; font-weight: bold; color: #198754; }
+        .booking-details { background-color: #f8f9fa; padding: 10px; border-radius: 3px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Thai Siam Massage</h1>
+            <h2>Booking Confirmation</h2>
+        </div>
+        
+        <div class="content">
+            <div class="success-icon">✅</div>
+            
+            <h3>Thank you for your booking, {{ customer_name }}!</h3>
+            <p>Your payment has been successfully processed and your massage appointments are confirmed.</p>
+            
+            <div class="order-details">
+                <h4>Order Summary</h4>
+                <div class="order-info">
+                    <strong>Order Number:</strong> #{{ order.id }}
+                </div>
+                <div class="order-info">
+                    <strong>Customer:</strong> {{ order.full_name }}
+                </div>
+                <div class="order-info">
+                    <strong>Email:</strong> {{ order.email }}
+                </div>
+                <div class="order-info">
+                    <strong>Order Date:</strong> {{ order.created_at|date:"F d, Y at g:i A" }}
+                </div>
+                <div class="order-info">
+                    <strong>Payment Status:</strong> {{ order.get_payment_status_display }}
+                </div>
+                <div class="order-info total">
+                    <strong>Total Amount Paid:</strong> £{{ order_total }}
+                </div>
+            </div>
+
+            {% if bookings %}
+            <div class="order-details">
+                <h4>Your Massage Appointments</h4>
+                {% for booking in bookings %}
+                <div class="booking-item">
+                    <div class="booking-details">
+                        <strong>{{ booking.treatment.title }}</strong><br>
+                        <strong>Date:</strong> {{ booking.date|date:"l, F d, Y" }}<br>
+                        <strong>Time:</strong> {{ booking.start_time|time:"g:i A" }} - {{ booking.end_time|time:"g:i A" }}<br>
+                        <strong>Duration:</strong> {{ booking.duration }} minutes
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="order-details">
+                <h4>Billing Address</h4>
+                <div class="order-info">
+                    {{ order.address }}<br>
+                    {{ order.city }}, {{ order.postal_code }}<br>
+                    {{ order.country.name }}
+                </div>
+            </div>
+            
+            <div class="order-details">
+                <h4>Important Information</h4>
+                <p><strong>📍 Location:</strong><br>
+                Vasileos Georgiou I, 70a Potamos Germasogeias<br>
+                Germasogeia, Municipality 4048, Cyprus</p>
+                
+                <p><strong>📞 Contact:</strong> (+357) 99 256 453</p>
+                
+                <p><strong>🕒 Opening Hours:</strong> Monday - Sunday: 9:00 AM - 10:00 PM</p>
+                
+                <h5>Before Your Appointment:</h5>
+                <ul>
+                    <li>Please arrive 10 minutes before your scheduled time</li>
+                    <li>Bring a valid ID for verification</li>
+                    <li>Wear comfortable, loose-fitting clothing</li>
+                    <li>Avoid heavy meals 2 hours before your massage</li>
+                </ul>
+                
+                <h5>Need to Reschedule?</h5>
+                <p>Contact us at least 24 hours in advance: (+357) 99 256 453</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Thank you for choosing Thai Siam Massage!</strong></p>
+            <p>We look forward to providing you with an authentic Thai massage experience.</p>
+            <p>If you have any questions, please don't hesitate to contact us.</p>
+        </div>
+    </div>
+</body>
+</html>
