@@ -21,12 +21,13 @@ def dashboard(request):
     future_bookings = Booking.objects.filter(user=request.user, date__gte=today).order_by('date', 'start_time')
     past_bookings = Booking.objects.filter(user=request.user, date__lt=today).order_by('-date', '-start_time')
 
-    treatments = Treatments.objects.all() if request.user.is_superuser else []
+    treatments = Treatments.objects.all() if request.user.is_superuser else None
 
     context = {
         'future_bookings': future_bookings,
         'past_bookings': past_bookings,
         'treatments': treatments,
+        'user': request.user,
     }
 
     return render(request, 'dashboard/dashboard.html', context)
