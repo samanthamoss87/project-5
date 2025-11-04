@@ -53,3 +53,16 @@ class Order(models.Model):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    treatment_id = models.IntegerField()
+    treatment_title = models.CharField(max_length=255)
+    date = models.DateField()
+    start_time = models.TimeField()
+    duration = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    def __str__(self):
+        return f"{self.treatment_title} - {self.date} at {self.start_time}"
