@@ -4,23 +4,51 @@
 
 {% block title %} Dashboard {% endblock %}
 
+{% block extra_css %}
+<style>
+.card {
+    border-radius: 15px;
+}
+</style>
+{% endblock extra_css%}
 
 {% block content %}
 <header class="masthead masthead-banner">
     <div class="container">
-        <div class="masthead-heading text-uppercase">Welcome, {{ user.username }}</div>
+        <div class="masthead-heading text-uppercase">Treatment Management</div>
+        <div class="masthead-subheading">{% if form.instance.pk %}Edit Treatment{% else %}Add New Treatment{% endif %}</div>
     </div>
 </header>
 
 <div class="container py-5">
-    <h1 class="text-center">{% if form.instance.pk %}Edit Treatment{% else %}Add Treatment{% endif %}</h1>
-
-    <form method="POST">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <button type="submit" class="btn btn-primary w-100 mt-4">
-            {% if form.instance.pk %}Update Treatment{% else %}Add Treatment{% endif %}
-        </button>
-    </form>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-spa me-2"></i>
+                        {% if form.instance.pk %}Edit Treatment{% else %}Add Treatment{% endif %}
+                    </h3>
+                </div>
+                <div class="card-body p-5">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-success btn-lg px-5 me-3">
+                                <i class="fas fa-save me-2"></i>
+                                {% if form.instance.pk %}Update Treatment{% else %}Add Treatment{% endif %}
+                            </button>
+                            <a href="{% url 'dashboard:dashboard' %}" class="btn btn-outline-secondary btn-lg px-5">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 {% endblock %}
