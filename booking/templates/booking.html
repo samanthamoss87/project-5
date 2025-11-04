@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Book Your Treatment - Thai Siam Massage {% endblock %}
+{% block title %} Book Your Treatment {% endblock %}
 
 {% block content %}
 
 <header class="masthead masthead-banner">
     <div class="container">
         <div class="masthead-heading text-uppercase">Book Your Treatment</div>
+    <div class="masthead-subheading">Experience authentic Thai massage therapy</div>
     </div>
 </header>
 
 <section class="page-section" id="booking">
     <div class="container">
+        <div class="text-center mb-5">
+        <h2 class="section-heading text-uppercase">Professional Thai Massage Services</h2>
+        <h3 class="section-subheading text-muted">Choose from our range of therapeutic treatments</h3>
+        </div>
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
                 {% if form.errors %}
