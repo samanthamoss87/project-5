@@ -3,70 +3,126 @@
 
 {% block title %} Bag {% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<style>
+.card {
+    border-radius: 15px;
+}
+.btn-group .btn {
+    margin: 0 2px;
+}
+.badge {
+    font-size: 0.9em;
+}
+</style>
+{% endblock %}
 
+
+{% block content %}
 <header class="masthead masthead-banner">
     <div class="container">
         <div class="masthead-heading text-uppercase">Your Treatment Bag</div>
+        <div class="masthead-subheading">Review your selected treatments</div>
     </div>
 </header>
 
-
-<div class="container mt-5">
+<div class="container page-section">
     {% if bag_items %}
-
-
-    <div class="table">
-        <table class="table table-striped table-hover table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Treatment</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col">Price</th>
-                    <th scope="col" class="text-end">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in bag_items %}
-                <tr>
-                    <td>{{ item.treatment_title }}</td>
-                    <td>{{ item.date }}</td>
-                    <td>{{ item.start_time }}</td>
-                    <td>{{ item.duration }} mins</td>
-                    <td class="text-end">£{{ item.price|floatformat:2 }}</td>
-                    <td class="text-end">
-                        {% if item.id %}
-                        <a href="{% url 'remove_from_bag' item_id=item.id %}" class="btn btn-danger btn-sm" onclick="confirmRemove('{{ item.id }}')">Remove</a>
-                        <a href="{% url 'edit_booking' item.id %}" class="btn btn-warning btn-sm">Edit</a>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5" class="text-center py-4">Your cart is empty</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4" class="text-end fw-bold">Total:</td>
-                    <td class="text-end fw-bold">£{{ total_price|floatformat:2 }}</td>
-                </tr>
-            </tfoot>
-        </table>
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0"><i class="fas fa-shopping-bag me-2"></i>Selected Treatments</h4>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col"><i class="fas fa-spa me-1"></i>Treatment</th>
+                            <th scope="col"><i class="fas fa-calendar me-1"></i>Date</th>
+                            <th scope="col"><i class="fas fa-clock me-1"></i>Time</th>
+                            <th scope="col"><i class="fas fa-hourglass-half me-1"></i>Duration</th>
+                            <th scope="col" class="text-end"><i class="fas fa-pound-sign me-1"></i>Price</th>
+                            <th scope="col" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in bag_items %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold text-success">{{ item.treatment_title }}</div>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark">{{ item.date }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark">{{ item.start_time }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">{{ item.duration }} mins</span>
+                            </td>
+                            <td class="text-end">
+                                <span class="fw-bold">£{{ item.price|floatformat:2 }}</span>
+                            </td>
+                            <td class="text-center">
+                                {% if item.id %}
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'edit_booking' item.id %}" class="btn btn-outline-success btn-sm" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'remove_from_bag' item_id=item.id %}" class="btn btn-outline-danger btn-sm" onclick="confirmRemove('{{ item.id }}')" title="Remove">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="fas fa-shopping-bag fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Your bag is empty</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h4 class="mb-0">Total: <span class="text-success">£{{ total_price|floatformat:2 }}</span></h4>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'book_now' %}" class="btn btn-outline-success">
+                            <i class="fas fa-plus me-1"></i>Add More
+                        </a>
+                        <a href="{% url 'checkout:checkout' %}" class="btn btn-success">
+                            <i class="fas fa-credit-card me-1"></i>Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="mt-5 d-flex justify-content-center align-items-center mb-5 gap-3">
-        <a href="{% url 'book_now' %}" class="btn btn-primary">Add More Treatments</a>
-        <a href="{% url 'checkout:checkout' %}" class="btn btn-secondary">Go To Checkout</a>
-    </div>
-
     {% else %}
-    <div class="d-flex justify-content-center align-items-center flex-column p-5">
-        <h2 class="">Your Bag is Empty</h2>
-        <a href="{% url 'treatments' %}">Go Back to Treatments</a>
+    <div class="text-center py-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-body py-5">
+                <i class="fas fa-shopping-bag fa-5x text-muted mb-4"></i>
+                <h2 class="text-muted mb-4">Your Bag is Empty</h2>
+                <p class="text-muted mb-4">Start by selecting your preferred treatments</p>
+                <div class="btn-group" role="group">
+                    <a href="{% url 'treatments' %}" class="btn btn-outline-success btn-lg">
+                        <i class="fas fa-spa me-2"></i>View Treatments
+                    </a>
+                    <a href="{% url 'book_now' %}" class="btn btn-success btn-lg">
+                        <i class="fas fa-calendar-plus me-2"></i>Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     {% endif %}
 </div>
@@ -84,4 +140,4 @@
         }
     }
 </script>
-{% endblock %}
+{% endblock postloadjs %}
