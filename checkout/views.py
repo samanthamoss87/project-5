@@ -9,7 +9,7 @@ import json
 from django.http import JsonResponse
 
 from .forms import CheckoutForm
-from .models import Order
+from .models import Order, OrderItem
 
 
 stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
@@ -39,6 +39,17 @@ def checkout_view(request):
                 amount=total_price
             )
             order.save()
+
+            for item in bag_items:
+                OrderItem.objects.create(
+                    order=order,
+                    treatment_id=item['treatment_id'],
+                    treatment_title=item['treatment_title'],
+                    date=item['date'],
+                    start_time=item['start_time'],
+                    duration=item['duration'],
+                    price=item['price']
+                )
 
             try:
                 payment_intent = stripe.PaymentIntent.create(
