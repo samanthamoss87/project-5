@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
+from datetime import datetime
 from .models import Order
 from booking.models import Booking, Treatments
 
@@ -36,8 +37,17 @@ def send_order_confirmation_email(sender, instance, created, **kwargs):
             print(f"Failed to send order confirmation email: {str(e)}")
 
 def create_bookings_from_order(order):
-    """Create actual booking records from order (if not already created)"""
+    """Create actual booking records from order items"""
     try:
-        pass
+        for item in order.items.all():
+            treatment = Treatments.objects.get(id=item.treatment_id)
+            
+            Booking.objects.create(
+                user=order.user,
+                treatment=treatment,
+                date=datetime.strptime(item.date, '%Y-%m-%d').date() if isinstance(item.date, str) else item.date,
+                start_time=datetime.strptime(item.start_time, '%H:%M').time() if isinstance(item.start_time, str) else item.start_time,
+                duration=item.duration
+            )
     except Exception as e:
         print(f"Failed to create bookings from order: {str(e)}")
