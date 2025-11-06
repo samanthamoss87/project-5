@@ -80,13 +80,17 @@
     </div>
 </section>
 
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const treatmentSelect = document.getElementById('id_treatment');
     const durationRadios = document.querySelectorAll('input[name="duration"]');
     const totalPriceElement = document.getElementById('total-price');
+    const dateInput = document.getElementById('id_date');
     
-    // Treatment pricing data
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
     const treatmentPrices = {
         {% for treatment in treatments %}
         '{{ treatment.id }}': {
@@ -101,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedTreatment = treatmentSelect.value;
         
         if (selectedTreatment && treatmentPrices[selectedTreatment]) {
-            // Update duration labels with current treatment prices
             durationRadios.forEach(radio => {
                 const label = radio.nextElementSibling;
                 const durationValue = radio.value;
@@ -112,8 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     label.querySelector('.duration-text').textContent = durationText;
                 }
             });
-            
-            // Update total price if duration is selected
+
             const selectedDuration = document.querySelector('input[name="duration"]:checked');
             if (selectedDuration) {
                 const price = treatmentPrices[selectedTreatment][selectedDuration.value];
@@ -131,14 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
             totalPriceElement.textContent = '£' + parseFloat(price).toFixed(2);
         }
     }
-    
-    // Event listeners
+
     treatmentSelect.addEventListener('change', updatePricing);
     durationRadios.forEach(radio => {
         radio.addEventListener('change', updateTotalPrice);
     });
     
-    // Initial update
     updatePricing();
 });
 </script>
