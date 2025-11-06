@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
-from datetime import datetime
+from datetime import datetime, timedelta
 from booking.models import Booking, Treatments 
 from booking.forms import BookingForm
 from .forms import TreatmentForm
@@ -16,16 +16,32 @@ def is_superuser(user):
 
 @login_required
 def dashboard(request):
-    today = datetime.today().date()
-
-    future_bookings = Booking.objects.filter(user=request.user, date__gte=today).order_by('date', 'start_time')
-    past_bookings = Booking.objects.filter(user=request.user, date__lt=today).order_by('-date', '-start_time')
+    from django.utils import timezone
+    now = timezone.now()
+    
+    all_confirmed_bookings = Booking.objects.filter(user=request.user, status='confirmed')
+    
+    future_bookings = []
+    past_bookings = []
+    
+    for booking in all_confirmed_bookings:
+        booking_datetime = timezone.make_aware(datetime.combine(booking.date, booking.start_time))
+        if booking_datetime > now:
+            future_bookings.append(booking)
+        else:
+            past_bookings.append(booking)
+    
+    future_bookings.sort(key=lambda x: (x.date, x.start_time))
+    past_bookings.sort(key=lambda x: (x.date, x.start_time), reverse=True)
+    
+    cancelled_bookings = Booking.objects.filter(user=request.user, status='cancelled').order_by('-date', '-start_time')
 
     treatments = Treatments.objects.all() if request.user.is_superuser else None
 
     context = {
         'future_bookings': future_bookings,
         'past_bookings': past_bookings,
+        'cancelled_bookings': cancelled_bookings,
         'treatments': treatments,
         'user': request.user,
     }
@@ -117,3 +133,28 @@ def send_newsletter(request, pk):
         return redirect('dashboard:dashboard')
     
     return render(request, 'dashboard/send_newsletter.html', {'treatment': treatment})
+
+
+@login_required
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+    
+    booking_datetime = datetime.combine(booking.date, booking.start_time)
+    current_datetime = datetime.now()
+    time_difference = booking_datetime - current_datetime
+    
+    if time_difference.total_seconds() < 24 * 3600: 
+        messages.error(request, "You can only cancel bookings that are at least 24 hours away.")
+        return redirect('dashboard:dashboard')
+    
+    if booking.status == 'cancelled':
+        messages.warning(request, "This booking is already cancelled.")
+        return redirect('dashboard:dashboard')
+    
+    if request.method == 'POST':
+        booking.status = 'cancelled'
+        booking.save()
+        messages.success(request, f"Your booking for {booking.treatment.title} on {booking.date} has been cancelled.")
+        return redirect('dashboard:dashboard')
+    
+    return render(request, 'dashboard/cancel_booking.html', {'booking': booking})
