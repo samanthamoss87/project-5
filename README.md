@@ -33,7 +33,7 @@
     - [Framework](#frameworks)
     - [Libraries](#libraries)
     - [Platforms](#platforms)
-    - [Other Tools](#other-tools)
+    - [Data Schema](#data-schema)
 5. [Local Development & Deployment](#local-development--deployment)
     - [Local Development](#local-development)
         - [Local Preparation](#local-preparation)
@@ -470,6 +470,255 @@ This project not only demonstrates my ability to integrate multiple technologies
 - [Sendgrid](https://sendgrid.com/)
     - SMTP Server
 
+## Data Schema
+<div align="center"> 
+    <img src="readme-images/ER_Diagram.png" alt="ER Diagram">
+</div>
+
+
+### System Entity–Relationship (ER) Documentation
+
+This document describes the data model used across the **Booking**, **Checkout**, and **Newsletter** modules. It explains each entity, its attributes, and the relationships among them as represented in the ERD.
+
+----------
+
+#### **1. Overview**
+
+The system is designed to support an online treatment booking workflow, order processing, and newsletter subscription management.  
+It integrates three functional domains:
+
+1.  **Booking Domain** – treatments, customer bookings, contact inquiries.
+    
+2.  **Checkout Domain** – order processing and purchased booking items.
+    
+3.  **Communication Domain** – newsletter subscriptions.
+    
+
+The ERD ensures data consistency, traceability, and a scalable structure for future enhancements.
+
+----------
+
+### 2. Entities and Their Descriptions
+
+----------
+
+#### 2.1 Treatments
+
+Stores information about the available treatment types and their pricing.
+
+#### Key Fields
+
+-   **title** – Name of the treatment.
+    
+-   **description** – Detailed information.
+    
+-   **half_hour / one_hour / two_hour** – Pricing tiers.
+    
+
+#### Role in the System
+
+Serves as a primary reference for both **Bookings** and **Order Items**, enabling pricing and title information to be preserved even if a treatment record is modified.
+
+----------
+
+#### 2.2 Booking
+
+Represents a customer's appointment for a treatment.
+
+#### Key Fields
+
+-   **treatment_id** – References a treatment.
+    
+-   **user_id** – Associated customer.
+    
+-   **date, start_time, end_time** – Scheduled slot.
+    
+-   **duration** – Duration in minutes.
+    
+-   **status** – Current state (confirmed or cancelled).
+    
+
+#### Relationships
+
+-   **Booking → Treatments** (Many-to-One)
+    
+-   **Booking → Auth User** (Many-to-One)
+    
+
+#### Role in the System
+
+Captures the exact appointment details by the user.  
+End time is automatically computed based on duration.
+
+----------
+
+#### 2.3 Contact
+
+Stores general support or inquiry messages.
+
+#### Key Fields
+
+-   **name, email** – Sender’s information.
+    
+-   **subject, message** – Message details.
+    
+-   **created_at** – Timestamp.
+
+----------
+
+### 3. Checkout Domain
+
+----------
+
+### 3.1 Order
+
+Represents a financial transaction initiated by a customer.
+
+#### Key Fields
+
+-   **user_id** – Optional link to registered users.
+    
+-   **first_name, last_name, email** – Billing details.
+    
+-   **address, city, postal_code, country** – Delivery/billing address.
+    
+-   **stripe_token / stripe_payment_id** – Payment identifiers.
+    
+-   **amount** – Total order value.
+    
+-   **payment_status** – Pending, paid, failed, refunded.
+    
+
+#### Relationships
+
+-   **Order → Auth User** (Many-to-One)
+    
+-   **Order → Order Items** (One-to-Many)
+    
+
+#### Role in the System
+
+Central entity for tracking customer purchases.  
+The design ensures financial data remains intact, even if user or treatment records change.
+
+----------
+
+### 3.2 Order Item
+
+Represents an individual purchased booking item within an Order.
+
+#### Key Fields
+
+-   **order_id** – Parent order.
+    
+-   **treatment_id** – Copy of the treatment ID at purchase time.
+    
+-   **treatment_title** – Preserved snapshot of the title.
+    
+-   **date, start_time, duration** – Service details.
+    
+-   **price** – Final price paid.
+    
+
+#### Relationships
+
+-   **Order Item → Order** (Many-to-One)
+    
+
+#### Role in the System
+
+Decouples purchased items from the live data model to maintain historical accuracy (e.g., treatment renamed or deleted).
+
+----------
+
+### 4. Newsletter Domain
+
+----------
+
+#### 4.1 Subscribe
+
+Represents a newsletter subscriber.
+
+#### Key Fields
+
+-   **email** – Unique subscriber email.
+    
+-   **is_active** – Indicates if the subscriber is currently active.
+    
+
+#### Role in the System
+
+Enables simple subscription tracking with clean opt-in/opt-out logic.
+
+----------
+
+### 5. Cross-Domain Relationships
+
+#### User Entity (auth_user)
+
+-   Referenced by both **Booking** and **Order**.
+    
+-   Establishes user-centric activity tracking:
+    
+    -   what they booked
+        
+    -   what they purchased
+        
+
+#### Treatment Entity
+
+-   Referenced by **Booking** and **OrderItem**.
+    
+-   Ensures pricing and titles remain consistent across modules.
+    
+
+----------
+
+### 6. Architectural Considerations
+
+#### Data Integrity
+
+Foreign key constraints ensure bookings cannot exist without a defined treatment and user, and order items must belong to valid orders.
+
+#### Historical Consistency
+
+Order Items store treatment details independently from the live treatment table, ensuring financial records remain untouched by future updates.
+
+#### Scalability
+
+Clear modular separation between booking, orders, and newsletters allows each subsystem to evolve independently.
+
+#### Extensibility
+
+The model supports future additions such as:
+
+-   Notifications
+    
+-   Treatment categories
+    
+-   Payment gateway integration
+    
+-   Loyalty system
+    
+-   Multi-provider booking
+    
+
+----------
+
+### 7. Summary
+
+The ERD reflects a well-structured schema where:
+
+-   **Treatments** define services
+    
+-   **Bookings** reserve those services
+    
+-   **Orders** handle payments
+    
+-   **Order Items** itemize purchases
+    
+-   **Subscribers** manage communications
+
 # Local Development & Deployment
 ## Local Development
 ### Local Preparation
@@ -578,8 +827,6 @@ python manage.py createsuperuser
 
 # Bugs
 ## Known bugs
-- Custom 404 Page is not working properly
-- User doesn't get any email after booking a schedule due to smtp server error
 - Privacy Policy and Terms and conditions page is not working as awaiting content from the client
 - Automated git deployment is not working
 - Few pages of django-allauth doesn't inherit the base template
