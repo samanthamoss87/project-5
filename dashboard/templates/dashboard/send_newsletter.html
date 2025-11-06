@@ -4,6 +4,13 @@
 {% block title %}Send Newsletter - {{ treatment.title }}{% endblock %}
 
 {% block content %}
+<header class="masthead masthead-banner">
+  <div class="container">
+    <div class="masthead-heading text-uppercase">Send Newsletter</div>
+    <div class="masthead-subheading">{{ user.is_superuser|yesno:"Hi Admin -Send a Newsletter to all Subscribers, Not an admin" }}</div>
+  </div>
+</header>
+
 <section class="page-section" id="send-newsletter">
     <div class="container">
         <div class="text-center">
