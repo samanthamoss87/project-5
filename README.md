@@ -158,6 +158,7 @@ This project not only demonstrates my ability to integrate multiple technologies
 ## Imagery
 <div align="center"> 
     <img src="readme-images/imagery.png" alt="Imagery">
+    <img src="readme-images/photo-collage.png" alt="Imagery">
 </div> 
 
 - These are the photos I used for my website that all are copyright free.
@@ -246,7 +247,31 @@ This project not only demonstrates my ability to integrate multiple technologies
 </div> 
 
 - I added this text to make the front page be attractive to the eye, whilst also been business specific.
-- Knowing that there is no background image, I wanted to add text to it to draw people in.
+- I designed some icons to looks more professional and nice UI.
+
+
+<div align="center"> 
+    <img src="readme-images/services-section.png" alt="Welcome Section">
+</div> 
+
+- I added this section to merketing purpose, the main purpose of this section is to looks like more professional.
+- I found only these 3 type, so I added those with appropriate images.
+
+
+<div align="center"> 
+    <img src="readme-images/why-choose-us.png" alt="Welcome Section">
+</div> 
+
+- I added this section to knowing users why they should booking treatment from here.
+- I added some key points for grab attention.
+
+
+<div align="center"> 
+    <img src="readme-images/pricing.png" alt="Welcome Section">
+</div> 
+
+- I added this section to knowing users a pricing overview of a typical therapy.
+- I highlighted middle one so they consider booking that one.
 
 
 <div align="center"> 
@@ -255,6 +280,15 @@ This project not only demonstrates my ability to integrate multiple technologies
 
 - I created a section where people can find our place easily.
 - It gives the end user another direct link into the Booking page.
+
+
+<div align="center"> 
+    <img src="readme-images/review-and-next.png" alt="Our Information">
+</div> 
+
+- I added a review section for customer trust.
+- It gives the end user an idea so he/she consider to book.
+- And after that I put very big 2 button so now he/she can take a dicission what to do.
 
 
 ## Treatments
@@ -304,6 +338,7 @@ This project not only demonstrates my ability to integrate multiple technologies
 ## Dashboard
 - Created the dashbaord for multiple roles of user
 - Superuser can create, view, edit and delete treatments
+- Superuser also can send personalized email as newsletter with quotation. The email will be sent to all user who has subscribed.
 - Site user wil see their bookings.
 - If there is no booking it's just empty with some messages.
 - Dashboard for SUPER USER
@@ -321,6 +356,7 @@ This project not only demonstrates my ability to integrate multiple technologies
 ## Bag
 <div align="center"> 
     <img src="readme-images/bag.png" alt="Bag">
+    <img src="readme-images/bag2.png" alt="Bag">
 </div>
 
 - User can edit or remove treatments from the bag
@@ -354,6 +390,23 @@ This project not only demonstrates my ability to integrate multiple technologies
 
 - User can send us messages through this form that will be saved to the database
 - User's message will send to the owner's email
+
+
+## Send Newsletter
+<div align="center"> 
+    <img src="readme-images/send-newsletter.png" alt="Contact us">
+</div> 
+
+- Superuser can send newsletter with a treatment to all users who subscribed to newsletter.
+- Newsletter will send to the owner's email
+
+
+## Unsubscribe
+<div align="center"> 
+    <img src="readme-images/unsubscribe.png" alt="Contact us">
+</div> 
+
+- User can unsubscribe from getting email
 
 
 ### Reset Password
