@@ -35,7 +35,6 @@
 
 <div class="container page-section">
   {% if user.is_superuser %}
-    <!-- Admin Dashboard -->
     <div class="row mb-4">
       <div class="col-12">
         <div class="card shadow">
@@ -107,9 +106,7 @@
       </div>
     </div>
   {% else %}
-    <!-- User Dashboard -->
     <div class="row">
-      <!-- Upcoming Bookings -->
       <div class="col-lg-6 mb-4">
         <div class="card shadow h-100">
           <div class="card-header bg-success text-white">
@@ -124,6 +121,7 @@
                     <th scope="col">Treatment</th>
                     <th scope="col">Date & Time</th>
                     <th scope="col">Duration</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -148,6 +146,17 @@
                     <td>
                       <span class="badge bg-success">{{ booking.duration }} mins</span>
                     </td>
+                    <td>
+                      {% if booking.can_cancel %}
+                        <a href="{% url 'dashboard:cancel_booking' booking.id %}" class="btn btn-outline-danger btn-sm">
+                          <i class="fas fa-times me-1"></i>Cancel
+                        </a>
+                      {% else %}
+                        <button class="btn btn-outline-secondary btn-sm" disabled title="Cannot cancel within 24 hours of appointment">
+                          <i class="fas fa-ban me-1"></i>Too Late
+                        </button>
+                      {% endif %}
+                    </td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -166,7 +175,6 @@
         </div>
       </div>
 
-      <!-- Past Bookings -->
       <div class="col-lg-6 mb-4">
         <div class="card shadow h-100">
           <div class="card-header bg-secondary text-white">
@@ -217,11 +225,63 @@
             </div>
             {% endif %}
           </div>
+          
+    {% if cancelled_bookings %}
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-warning text-dark">
+            <h4 class="mb-0"><i class="fas fa-ban me-2"></i>Cancelled Bookings</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Treatment</th>
+                    <th scope="col">Date & Time</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for booking in cancelled_bookings %}
+                  <tr>
+                    <td>
+                      <div class="fw-bold text-muted">{{ booking.treatment.title }}</div>
+                    </td>
+                    <td>
+                      <div class="fw-bold">{{ booking.date|date:"M d, Y" }}</div>
+                      <small class="text-muted">
+                        {% with booking.start_time as start_time %}
+                        {% if start_time.minute == 0 %}
+                        {{ start_time|time:"g:00 A" }}
+                        {% else %}
+                        {{ start_time|time:"g:i A" }}
+                        {% endif %}
+                        {% endwith %}
+                        - {{ booking.end_time|time:"g:i A" }}
+                      </small>
+                    </td>
+                    <td>
+                      <span class="badge bg-warning text-dark">{{ booking.duration }} mins</span>
+                    </td>
+                    <td>
+                      <span class="badge bg-danger">Cancelled</span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    {% endif %}        </div>
+      </div>
+    </div>
 
-    <!-- Quick Actions -->
     <div class="row">
       <div class="col-12">
         <div class="card shadow">
@@ -255,6 +315,7 @@
     </div>
   {% endif %}
 </div>
+
 
 
 
