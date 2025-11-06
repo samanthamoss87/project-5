@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from datetime import datetime, date
 import uuid
 from booking.models import Treatments, Booking
 from booking.forms import BookingForm
@@ -9,10 +11,16 @@ def view_bag(request):
 
 def add_to_bag(request):
     if request.method == "POST":
+            
         treatment_id = request.POST.get('treatment')
-        date = request.POST.get('date')
+        date_str = request.POST.get('date')
         start_time = request.POST.get('start_time')
         duration = int(request.POST.get('duration'))
+        
+        booking_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        if booking_date < date.today():
+            messages.error(request, "You cannot book an appointment for a past date.")
+            return redirect('book_now')
         
         treatment = Treatments.objects.get(id=treatment_id)
         if duration == 30:
@@ -26,7 +34,7 @@ def add_to_bag(request):
             'id': str(uuid.uuid4()),
             'treatment_id': treatment.id,
             'treatment_title': treatment.title,
-            'date': date,
+            'date': date_str,
             'start_time': start_time,
             'duration': duration,
             'price': float(price),
@@ -79,9 +87,14 @@ def edit_booking(request, item_id):
     
     if request.method == 'POST':
         treatment_id = request.POST.get('treatment')
-        date = request.POST.get('date')
+        date_str = request.POST.get('date')
         start_time = request.POST.get('start_time')
         duration = int(request.POST.get('duration'))
+
+        booking_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        if booking_date < date.today():
+            messages.error(request, "You cannot book an appointment for a past date.")
+            return redirect('view_bag')
         
         treatment = Treatments.objects.get(id=treatment_id)
         if duration == 30:
@@ -90,14 +103,13 @@ def edit_booking(request, item_id):
             price = treatment.one_hour
         elif duration == 120:
             price = treatment.two_hour
-        
-        # Update the item in the bag
+
         for i, item in enumerate(bag_items):
             if str(item['id']) == item_id:
                 bag_items[i].update({
                     'treatment_id': treatment.id,
                     'treatment_title': treatment.title,
-                    'date': date,
+                    'date': date_str,
                     'start_time': start_time,
                     'duration': duration,
                     'price': float(price),
@@ -108,7 +120,7 @@ def edit_booking(request, item_id):
         request.session.modified = True
         return redirect('view_bag')
     else:
-        # Create form with current item data
+
         form = BookingForm(initial={
             'treatment': item_to_edit['treatment_id'],
             'date': item_to_edit['date'],
